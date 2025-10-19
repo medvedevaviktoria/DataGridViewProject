@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             toolStrip1 = new ToolStrip();
+            AddButton = new ToolStripButton();
             statusStrip1 = new StatusStrip();
-            toolStripStatusLabel1 = new ToolStripStatusLabel();
-            toolStripStatusLabel2 = new ToolStripStatusLabel();
-            toolStripStatusLabel3 = new ToolStripStatusLabel();
+            LabelQuantity = new ToolStripStatusLabel();
+            LabelPriceWithVAT = new ToolStripStatusLabel();
+            LabelPriceWithoutVat = new ToolStripStatusLabel();
             dataGridView1 = new DataGridView();
             ProductName = new DataGridViewTextBoxColumn();
             ProductSize = new DataGridViewTextBoxColumn();
@@ -41,44 +43,56 @@
             MinQuantity = new DataGridViewTextBoxColumn();
             PriceWithoutVAT = new DataGridViewTextBoxColumn();
             TotalPriceWithoutVAT = new DataGridViewTextBoxColumn();
+            toolStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // toolStrip1
             // 
+            toolStrip1.Items.AddRange(new ToolStripItem[] { AddButton });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1044, 25);
             toolStrip1.TabIndex = 1;
             toolStrip1.Text = "toolStrip1";
             // 
+            // AddButton
+            // 
+            AddButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            AddButton.Image = (Image)resources.GetObject("AddButton.Image");
+            AddButton.ImageTransparentColor = Color.Magenta;
+            AddButton.Name = "AddButton";
+            AddButton.Size = new Size(23, 22);
+            AddButton.Text = "toolStripButton1";
+            AddButton.Click += AddButton_Click;
+            // 
             // statusStrip1
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2, toolStripStatusLabel3 });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { LabelQuantity, LabelPriceWithVAT, LabelPriceWithoutVat });
             statusStrip1.Location = new Point(0, 563);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1044, 22);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
+            // LabelQuantity
             // 
-            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(118, 17);
-            toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            LabelQuantity.Name = "LabelQuantity";
+            LabelQuantity.Size = new Size(122, 17);
+            LabelQuantity.Text = "Количество товаров:";
             // 
-            // toolStripStatusLabel2
+            // LabelPriceWithVAT
             // 
-            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            toolStripStatusLabel2.Size = new Size(118, 17);
-            toolStripStatusLabel2.Text = "toolStripStatusLabel2";
+            LabelPriceWithVAT.Name = "LabelPriceWithVAT";
+            LabelPriceWithVAT.Size = new Size(235, 17);
+            LabelPriceWithVAT.Text = "Общая сумма товаров на складе(С НДС):";
             // 
-            // toolStripStatusLabel3
+            // LabelPriceWithoutVat
             // 
-            toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            toolStripStatusLabel3.Size = new Size(118, 17);
-            toolStripStatusLabel3.Text = "toolStripStatusLabel3";
+            LabelPriceWithoutVat.Name = "LabelPriceWithoutVat";
+            LabelPriceWithoutVat.Size = new Size(247, 17);
+            LabelPriceWithoutVat.Text = "Общая сумма товаров на складе(БЕЗ НДС):";
             // 
             // dataGridView1
             // 
@@ -92,7 +106,6 @@
             dataGridView1.Size = new Size(1044, 538);
             dataGridView1.TabIndex = 3;
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
-            dataGridView1.CellPainting += dataGridView1_CellPainting;
             // 
             // ProductName
             // 
@@ -155,6 +168,8 @@
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Автоматизация склада гвоздей";
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -165,9 +180,9 @@
         #endregion
         private ToolStrip toolStrip1;
         private StatusStrip statusStrip1;
-        private ToolStripStatusLabel toolStripStatusLabel1;
-        private ToolStripStatusLabel toolStripStatusLabel2;
-        private ToolStripStatusLabel toolStripStatusLabel3;
+        private ToolStripStatusLabel LabelQuantity;
+        private ToolStripStatusLabel LabelPriceWithVAT;
+        private ToolStripStatusLabel LabelPriceWithoutVat;
         private DataGridView dataGridView1;
         private DataGridViewTextBoxColumn ProductName;
         private DataGridViewTextBoxColumn ProductSize;
@@ -176,5 +191,6 @@
         private DataGridViewTextBoxColumn MinQuantity;
         private DataGridViewTextBoxColumn PriceWithoutVAT;
         private DataGridViewTextBoxColumn TotalPriceWithoutVAT;
+        private ToolStripButton AddButton;
     }
 }

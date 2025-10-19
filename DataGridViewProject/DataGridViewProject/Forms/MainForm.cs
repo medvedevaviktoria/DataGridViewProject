@@ -1,5 +1,5 @@
-﻿using DataGridViewProject.Models;
-using System.Diagnostics;
+﻿using DataGridViewProject.Forms;
+using DataGridViewProject.Models;
 
 namespace DataGridViewProject
 {
@@ -49,7 +49,6 @@ namespace DataGridViewProject
             dataGridView1.DataSource = bindingSource;
         }
 
-
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var col = dataGridView1.Columns[e.ColumnIndex];
@@ -80,22 +79,24 @@ namespace DataGridViewProject
                         break;
                 }
             }
-
-        }
-
-        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.ColumnIndex < 0 || e.RowIndex < 0)
-            {
-                return;
-            }
         }
 
         private void SetStatistic()
         {
-            toolStripStatusLabel1.Text = $"Количество товаров: {products.Count}";
-            toolStripStatusLabel2.Text = $"Общая сумма товаров на складе(С НДС): {products.Sum(x => x.TotalPriceWithVAT):F2} ₽";
-            toolStripStatusLabel3.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {products.Sum(x => x.TotalPriceWithoutVAT):F2} ₽";
+            LabelQuantity.Text = $"Количество товаров: {products.Count}";
+            LabelPriceWithVAT.Text = $"Общая сумма товаров на складе(С НДС): {products.Sum(x => x.TotalPriceWithVAT):F2} ₽";
+            LabelPriceWithoutVat.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {products.Sum(x => x.TotalPriceWithoutVAT):F2} ₽";
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            var addForm = new ProductForm();
+            if (addForm.ShowDialog() == DialogResult.OK)
+            {
+                products.Add(addForm.CurrentProduct);
+                bindingSource.ResetBindings(false);
+                SetStatistic();
+            }
         }
     }
 }
