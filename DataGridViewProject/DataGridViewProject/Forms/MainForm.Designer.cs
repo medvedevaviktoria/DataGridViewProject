@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             toolStrip1 = new ToolStrip();
             AddButton = new ToolStripButton();
+            DeleteButton = new ToolStripButton();
             statusStrip1 = new StatusStrip();
             LabelQuantity = new ToolStripStatusLabel();
             LabelPriceWithVAT = new ToolStripStatusLabel();
@@ -50,7 +51,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { AddButton });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { AddButton, DeleteButton });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1044, 25);
@@ -64,8 +65,18 @@
             AddButton.ImageTransparentColor = Color.Magenta;
             AddButton.Name = "AddButton";
             AddButton.Size = new Size(23, 22);
-            AddButton.Text = "toolStripButton1";
+            AddButton.Text = "Добавление продукта";
             AddButton.Click += AddButton_Click;
+            // 
+            // DeleteButton
+            // 
+            DeleteButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            DeleteButton.Image = (Image)resources.GetObject("DeleteButton.Image");
+            DeleteButton.ImageTransparentColor = Color.Magenta;
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(23, 22);
+            DeleteButton.Text = "Удаление продукта";
+            DeleteButton.Click += DeleteButton_Click;
             // 
             // statusStrip1
             // 
@@ -192,5 +203,6 @@
         private DataGridViewTextBoxColumn PriceWithoutVAT;
         private DataGridViewTextBoxColumn TotalPriceWithoutVAT;
         private ToolStripButton AddButton;
+        private ToolStripButton DeleteButton;
     }
 }

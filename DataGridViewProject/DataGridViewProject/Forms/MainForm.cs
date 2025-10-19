@@ -98,5 +98,26 @@ namespace DataGridViewProject
                 SetStatistic();
             }
         }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            var product = (ProductModel)dataGridView1.SelectedRows[0].DataBoundItem;
+            var target = products.FirstOrDefault(x => x.Id == product.Id);
+            if (target != null && 
+                MessageBox.Show($"Вы действительно желаете удалить '{target.ProductName}'?",
+                "Удаление студента",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                products.Remove(target);
+                bindingSource.ResetBindings(false);
+                SetStatistic();
+            }
+        }
     }
 }
