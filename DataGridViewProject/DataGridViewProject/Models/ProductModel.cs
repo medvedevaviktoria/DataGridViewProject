@@ -4,21 +4,24 @@
     /// <summary>
     /// Модель продукта
     /// </summary>
-    internal class ProductModel
+    public class ProductModel
     {
+        /// <summary>
+        /// Идентификатор товара
+        /// </summary>
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Наименование товара
         /// </summary>
-        public string Name { get; set; } = string.Empty;
+        public string ProductName { get; set; } = string.Empty;
 
         /// <summary>
         /// Размер
         /// </summary>
-        public string Size { get; set; }
+        public string ProductSize { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Материал 
-        /// </summary>
+        /// <inheritdoc cref="Models.Material"/>
         public Material Material { get; set; }
 
         /// <summary>

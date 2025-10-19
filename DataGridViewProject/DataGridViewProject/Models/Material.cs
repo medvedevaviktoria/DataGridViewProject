@@ -3,7 +3,7 @@
     /// <summary>
     /// Материал предмета
     /// </summary>
-    internal enum Material: byte
+    public enum Material: byte
     {
         /// <summary>
         /// Неизвестно
