@@ -18,8 +18,16 @@ namespace DataGridViewProject.Infrostructure
             var destPropName = GetPropertyName(destinationProperty);
             var sourcePropName = GetPropertyName(sourceProperty);
 
-            var binding = new Binding(destPropName, source, sourcePropName);
-            binding.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+
+            var existing = control.DataBindings[destPropName];
+            if (existing != null)
+                control.DataBindings.Remove(existing);
+
+            var binding = new Binding(destPropName, source, sourcePropName)
+            {
+                DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged
+            };
+
             control.DataBindings.Add(binding);
 
             if (errorProvider != null)
