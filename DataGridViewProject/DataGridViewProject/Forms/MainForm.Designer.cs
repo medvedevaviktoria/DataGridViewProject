@@ -44,6 +44,7 @@
             MinQuantity = new DataGridViewTextBoxColumn();
             PriceWithoutVAT = new DataGridViewTextBoxColumn();
             TotalPriceWithoutVAT = new DataGridViewTextBoxColumn();
+            EditButton = new ToolStripButton();
             toolStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -51,7 +52,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { AddButton, DeleteButton });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { AddButton, DeleteButton, EditButton });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1044, 25);
@@ -60,21 +61,21 @@
             // 
             // AddButton
             // 
-            AddButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            AddButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             AddButton.Image = (Image)resources.GetObject("AddButton.Image");
             AddButton.ImageTransparentColor = Color.Magenta;
             AddButton.Name = "AddButton";
-            AddButton.Size = new Size(23, 22);
+            AddButton.Size = new Size(131, 22);
             AddButton.Text = "Добавление продукта";
             AddButton.Click += AddButton_Click;
             // 
             // DeleteButton
             // 
-            DeleteButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            DeleteButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             DeleteButton.Image = (Image)resources.GetObject("DeleteButton.Image");
             DeleteButton.ImageTransparentColor = Color.Magenta;
             DeleteButton.Name = "DeleteButton";
-            DeleteButton.Size = new Size(23, 22);
+            DeleteButton.Size = new Size(116, 22);
             DeleteButton.Text = "Удаление продукта";
             DeleteButton.Click += DeleteButton_Click;
             // 
@@ -167,6 +168,16 @@
             TotalPriceWithoutVAT.Name = "TotalPriceWithoutVAT";
             TotalPriceWithoutVAT.ReadOnly = true;
             // 
+            // EditButton
+            // 
+            EditButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            EditButton.Image = (Image)resources.GetObject("EditButton.Image");
+            EditButton.ImageTransparentColor = Color.Magenta;
+            EditButton.Name = "EditButton";
+            EditButton.Size = new Size(126, 22);
+            EditButton.Text = "Изменение продукта";
+            EditButton.Click += EditButton_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -204,5 +215,6 @@
         private DataGridViewTextBoxColumn TotalPriceWithoutVAT;
         private ToolStripButton AddButton;
         private ToolStripButton DeleteButton;
+        private ToolStripButton EditButton;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DataGridViewProject.Forms;
 using DataGridViewProject.Models;
+using System.Diagnostics;
 
 namespace DataGridViewProject
 {
@@ -108,7 +109,7 @@ namespace DataGridViewProject
 
             var product = (ProductModel)dataGridView1.SelectedRows[0].DataBoundItem;
             var target = products.FirstOrDefault(x => x.Id == product.Id);
-            if (target != null && 
+            if (target != null &&
                 MessageBox.Show($"Вы действительно желаете удалить '{target.ProductName}'?",
                 "Удаление студента",
                 MessageBoxButtons.YesNo,
@@ -117,6 +118,33 @@ namespace DataGridViewProject
                 products.Remove(target);
                 bindingSource.ResetBindings(false);
                 SetStatistic();
+            }
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                return; 
+            }
+
+            var product = (ProductModel)dataGridView1.SelectedRows[0].DataBoundItem;
+
+            var addForm = new ProductForm(product);
+            if (addForm.ShowDialog() == DialogResult.OK)
+            {
+                var target = products.FirstOrDefault(x => x.Id == addForm.CurrentProduct.Id);
+                if (target != null)
+                {
+                    target.ProductName = addForm.CurrentProduct.ProductName;
+                    target.ProductSize = addForm.CurrentProduct.ProductSize;
+                    target.Material = addForm.CurrentProduct.Material;
+                    target.Quantity = addForm.CurrentProduct.Quantity;
+                    target.MinQuantity = addForm.CurrentProduct.MinQuantity;
+                    target.PriceWithoutVAT = addForm.CurrentProduct.PriceWithoutVAT;
+                    bindingSource.ResetBindings(false);
+                    SetStatistic();
+                }
             }
         }
     }
