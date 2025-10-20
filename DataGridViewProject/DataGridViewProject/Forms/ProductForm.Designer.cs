@@ -137,6 +137,7 @@
             // numericUpDownQuantity
             // 
             numericUpDownQuantity.Location = new Point(279, 363);
+            numericUpDownQuantity.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDownQuantity.Name = "numericUpDownQuantity";
             numericUpDownQuantity.Size = new Size(168, 23);
             numericUpDownQuantity.TabIndex = 10;
@@ -144,6 +145,7 @@
             // numericUpDownMinQuantity
             // 
             numericUpDownMinQuantity.Location = new Point(279, 413);
+            numericUpDownMinQuantity.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDownMinQuantity.Name = "numericUpDownMinQuantity";
             numericUpDownMinQuantity.Size = new Size(168, 23);
             numericUpDownMinQuantity.TabIndex = 11;
@@ -152,6 +154,7 @@
             // 
             numericUpDownPriceWithoutVAT.DecimalPlaces = 2;
             numericUpDownPriceWithoutVAT.Location = new Point(279, 467);
+            numericUpDownPriceWithoutVAT.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDownPriceWithoutVAT.Name = "numericUpDownPriceWithoutVAT";
             numericUpDownPriceWithoutVAT.Size = new Size(168, 23);
             numericUpDownPriceWithoutVAT.TabIndex = 12;
@@ -164,6 +167,7 @@
             buttonAddProduct.TabIndex = 13;
             buttonAddProduct.Text = "Добавить";
             buttonAddProduct.UseVisualStyleBackColor = true;
+            buttonAddProduct.Click += buttonAddProduct_Click;
             // 
             // buttonCancel
             // 
@@ -176,7 +180,6 @@
             // 
             // ProductForm
             // 
-            AcceptButton = buttonAddProduct;
             AutoScaleMode = AutoScaleMode.None;
             CancelButton = buttonCancel;
             ClientSize = new Size(592, 643);
