@@ -73,7 +73,7 @@ namespace DataGridViewProject.Forms
                 {
                     foreach (var memberName in validationResult.MemberNames)
                     {
-                        Control control = memberName switch
+                        Control? control = memberName switch
                         {
                             nameof(ProductModel.ProductName) => textBoxProductName,
                             nameof(ProductModel.ProductSize) => textBoxProductSize,
