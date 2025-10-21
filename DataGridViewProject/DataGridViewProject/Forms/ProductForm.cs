@@ -7,37 +7,19 @@ namespace DataGridViewProject.Forms
     public partial class ProductForm : Form
     {
         private readonly ProductModel targetProduct;
-        private readonly ErrorProvider errorProvider = new ErrorProvider();
+
         public ProductForm(ProductModel? sourceProduct = null)
         {
             InitializeComponent();
 
             if (sourceProduct != null)
             {
-                targetProduct = new ProductModel
-                {
-                    Id = sourceProduct.Id,
-                    ProductName = sourceProduct.ProductName,
-                    ProductSize = sourceProduct.ProductSize,
-                    Material = sourceProduct.Material,
-                    Quantity = sourceProduct.Quantity,
-                    MinQuantity = sourceProduct.MinQuantity,
-                    PriceWithoutVAT = sourceProduct.PriceWithoutVAT
-                };
+                targetProduct = sourceProduct.Clone();
                 buttonAddProduct.Text = "Сохранить";
             }
             else
             {
-                targetProduct = new ProductModel
-                {
-                    Id = Guid.NewGuid(),
-                    ProductName = "",
-                    ProductSize = "",
-                    Material = Material.Unknown,
-                    Quantity = 0,
-                    MinQuantity = 0,
-                    PriceWithoutVAT = 0
-                };
+                targetProduct = new ProductModel();
             }
             comboBoxMaterial.DataSource = Enum.GetValues(typeof(Material));
 
@@ -46,16 +28,20 @@ namespace DataGridViewProject.Forms
             textBoxProductSize.AddBinding(x => x.Text, targetProduct, x => x.ProductSize);
             numericUpDownQuantity.AddBinding(x => x.Value, targetProduct, x => x.Quantity);
             numericUpDownMinQuantity.AddBinding(x => x.Value, targetProduct, x => x.MinQuantity);
-            numericUpDownPriceWithoutVAT.AddBinding(x => x.Value, targetProduct, x => x.PriceWithoutVAT);
-
-
+            numericUpDownPriceWithoutVAT.AddBinding(x => x.Value, targetProduct, x => x.PriceWithoutTax);
         }
 
+        /// <summary>
+        /// Текущий продукт формы
+        /// </summary>
         public ProductModel CurrentProduct => targetProduct;
 
+        /// <summary>
+        /// Метод обработки клика кнопки "Добавить" или "Сохранить"
+        /// </summary>
         private void buttonAddProduct_Click(object sender, EventArgs e)
         {
-            errorProvider.Clear();
+            errorProvider1.Clear();
 
             var context = new ValidationContext(targetProduct);
             var results = new List<ValidationResult>();
@@ -79,14 +65,14 @@ namespace DataGridViewProject.Forms
                             nameof(ProductModel.ProductSize) => textBoxProductSize,
                             nameof(ProductModel.Quantity) => numericUpDownQuantity,
                             nameof(ProductModel.MinQuantity) => numericUpDownMinQuantity,
-                            nameof(ProductModel.PriceWithoutVAT) => numericUpDownPriceWithoutVAT,
+                            nameof(ProductModel.PriceWithoutTax) => numericUpDownPriceWithoutVAT,
                             nameof(ProductModel.Material) => comboBoxMaterial,
                             _ => null
                         };
 
                         if (control != null)
                         {
-                            errorProvider.SetError(control, validationResult.ErrorMessage);
+                            errorProvider1.SetError(control, validationResult.ErrorMessage);
                         }
                     }
                 }

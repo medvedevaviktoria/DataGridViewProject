@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace DataGridViewProject.Infrostructure
 {
@@ -18,7 +19,6 @@ namespace DataGridViewProject.Infrostructure
             var destPropName = GetPropertyName(destinationProperty);
             var sourcePropName = GetPropertyName(sourceProperty);
 
-
             var existing = control.DataBindings[destPropName];
             if (existing != null)
                 control.DataBindings.Remove(existing);
@@ -32,19 +32,34 @@ namespace DataGridViewProject.Infrostructure
 
             if (errorProvider != null)
             {
-                var context = new ValidationContext(source); // создаём объект ValidationContext для передачи дополнительной информации о проверяемом объекте source
-                var results = new List<ValidationResult>(); // список со всеми найденными ошибками валидации
-                if (!Validator.TryValidateObject(source, context, results, true))
+                // Получаем данные валидации свойства из атрибутов
+                var sourcePropertyInfo = source.GetType().GetProperty(sourcePropName);
+                var validationAttributes = sourcePropertyInfo?.GetCustomAttributes<ValidationAttribute>();
+
+                if (validationAttributes?.Any() == true)
                 {
-                    var propError = results.FirstOrDefault(x => x.MemberNames.Contains(sourcePropName));
-                    if (propError != null)
+                    // Подписываемся на событие Validating, чтобы выполнять валидацию по необходимости
+                    control.Validating += (sender, e) =>
                     {
-                        errorProvider.SetError(control, propError.ErrorMessage);
-                    }
-                }
-                else
-                {
-                    errorProvider.SetError(control, string.Empty);
+                        var context = new ValidationContext(source) { MemberName = sourcePropName };
+                        var results = new List<ValidationResult>();
+
+                        // Очищаем предыдущие ошибки
+                        errorProvider.SetError(control, string.Empty);
+
+                        // Проверяем валидность конкретного свойства
+                        var propertyValue = sourcePropertyInfo?.GetValue(source);
+                        bool isValid = Validator.TryValidateProperty(propertyValue, context, results);
+
+                        // Если не валидно, проходимся по всем ошибкам и показываем их
+                        if (!isValid)
+                        {
+                            foreach (var error in results)
+                            {
+                                errorProvider.SetError(control, error.ErrorMessage);
+                            }
+                        }
+                    };
                 }
             }
         }
@@ -67,6 +82,5 @@ namespace DataGridViewProject.Infrostructure
 
             throw new ArgumentException("Espression must be a property access", nameof(expression));
         }
-
     }
 }

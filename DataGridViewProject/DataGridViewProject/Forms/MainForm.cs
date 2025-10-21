@@ -20,7 +20,7 @@ namespace DataGridViewProject
                 Material = Models.Material.Copper,
                 Quantity = 100,
                 MinQuantity = 45,
-                PriceWithoutVAT = 1.25m
+                PriceWithoutTax = 1.25m
             });
             products.Add(new ProductModel
             {
@@ -30,7 +30,7 @@ namespace DataGridViewProject
                 Material = Models.Material.Steel,
                 Quantity = 500,
                 MinQuantity = 100,
-                PriceWithoutVAT = 0.75m
+                PriceWithoutTax = 0.75m
             });
             products.Add(new ProductModel
             {
@@ -40,7 +40,7 @@ namespace DataGridViewProject
                 Material = Models.Material.Chrome,
                 Quantity = 300,
                 MinQuantity = 80,
-                PriceWithoutVAT = 1.10m
+                PriceWithoutTax = 1.10m
             });
             InitializeComponent();
             SetStatistic();
@@ -50,6 +50,9 @@ namespace DataGridViewProject
             dataGridView1.DataSource = bindingSource;
         }
 
+        /// <summary>
+        /// Обработчик события форматирования ячеек DataGridView
+        /// </summary>
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var col = dataGridView1.Columns[e.ColumnIndex];
@@ -82,24 +85,32 @@ namespace DataGridViewProject
             }
         }
 
+        /// <summary>
+        /// Метод обновоения общих данных о товарах
+        /// </summary>
         private void SetStatistic()
         {
             LabelQuantity.Text = $"Количество товаров: {products.Count}";
-            LabelPriceWithVAT.Text = $"Общая сумма товаров на складе(С НДС): {products.Sum(x => x.TotalPriceWithVAT):F2} ₽";
-            LabelPriceWithoutVat.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {products.Sum(x => x.TotalPriceWithoutVAT):F2} ₽";
+            LabelPriceWithVAT.Text = $"Общая сумма товаров на складе(С НДС): {products.Sum(x => x.TotalPriceWithTax):F2} ₽";
+            LabelPriceWithoutVat.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {products.Sum(x => x.TotalPriceWithoutTax):F2} ₽";
         }
 
+        /// <summary>
+        /// Обработчик нажатия кнопки Добавить товар
+        /// </summary>
         private void AddButton_Click(object sender, EventArgs e)
         {
             var addForm = new ProductForm();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
                 products.Add(addForm.CurrentProduct);
-                bindingSource.ResetBindings(false);
-                SetStatistic();
+                OnUpdate();
             }
         }
 
+        /// <summary>
+        /// Обработчик нажатия кнопки Удалить товар
+        /// </summary>
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
@@ -111,16 +122,18 @@ namespace DataGridViewProject
             var target = products.FirstOrDefault(x => x.Id == product.Id);
             if (target != null &&
                 MessageBox.Show($"Вы действительно желаете удалить '{target.ProductName}'?",
-                "Удаление студента",
+                "Удаление продукта",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 products.Remove(target);
-                bindingSource.ResetBindings(false);
-                SetStatistic();
+                OnUpdate();
             }
         }
 
+        /// <summary>
+        /// Обработчик нажатия кнопки Редактировать товар
+        /// </summary>
         private void EditButton_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
@@ -130,22 +143,30 @@ namespace DataGridViewProject
 
             var product = (ProductModel)dataGridView1.SelectedRows[0].DataBoundItem;
 
-            var addForm = new ProductForm(product);
-            if (addForm.ShowDialog() == DialogResult.OK)
+            var editForm = new ProductForm(product);
+            if (editForm.ShowDialog() == DialogResult.OK)
             {
-                var target = products.FirstOrDefault(x => x.Id == addForm.CurrentProduct.Id);
+                var target = products.FirstOrDefault(x => x.Id == editForm.CurrentProduct.Id);
                 if (target != null)
                 {
-                    target.ProductName = addForm.CurrentProduct.ProductName;
-                    target.ProductSize = addForm.CurrentProduct.ProductSize;
-                    target.Material = addForm.CurrentProduct.Material;
-                    target.Quantity = addForm.CurrentProduct.Quantity;
-                    target.MinQuantity = addForm.CurrentProduct.MinQuantity;
-                    target.PriceWithoutVAT = addForm.CurrentProduct.PriceWithoutVAT;
-                    bindingSource.ResetBindings(false);
-                    SetStatistic();
+                    target.ProductName = editForm.CurrentProduct.ProductName;
+                    target.ProductSize = editForm.CurrentProduct.ProductSize;
+                    target.Material = editForm.CurrentProduct.Material;
+                    target.Quantity = editForm.CurrentProduct.Quantity;
+                    target.MinQuantity = editForm.CurrentProduct.MinQuantity;
+                    target.PriceWithoutTax = editForm.CurrentProduct.PriceWithoutTax;
+                    OnUpdate();
                 }
             }
+        }
+
+        /// <summary>
+        /// Метод обновления всех данных на форме
+        /// </summary>
+        public void OnUpdate()
+        {
+            bindingSource.ResetBindings(false);
+            SetStatistic();
         }
     }
 }

@@ -32,6 +32,7 @@
             toolStrip1 = new ToolStrip();
             AddButton = new ToolStripButton();
             DeleteButton = new ToolStripButton();
+            EditButton = new ToolStripButton();
             statusStrip1 = new StatusStrip();
             LabelQuantity = new ToolStripStatusLabel();
             LabelPriceWithVAT = new ToolStripStatusLabel();
@@ -44,7 +45,6 @@
             MinQuantity = new DataGridViewTextBoxColumn();
             PriceWithoutVAT = new DataGridViewTextBoxColumn();
             TotalPriceWithoutVAT = new DataGridViewTextBoxColumn();
-            EditButton = new ToolStripButton();
             toolStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -79,6 +79,16 @@
             DeleteButton.Text = "Удаление продукта";
             DeleteButton.Click += DeleteButton_Click;
             // 
+            // EditButton
+            // 
+            EditButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            EditButton.Image = (Image)resources.GetObject("EditButton.Image");
+            EditButton.ImageTransparentColor = Color.Magenta;
+            EditButton.Name = "EditButton";
+            EditButton.Size = new Size(126, 22);
+            EditButton.Text = "Изменение продукта";
+            EditButton.Click += EditButton_Click;
+            // 
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new ToolStripItem[] { LabelQuantity, LabelPriceWithVAT, LabelPriceWithoutVat });
@@ -108,6 +118,8 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ProductName, ProductSize, Material, Quantity, MinQuantity, PriceWithoutVAT, TotalPriceWithoutVAT });
@@ -156,27 +168,17 @@
             // 
             // PriceWithoutVAT
             // 
-            PriceWithoutVAT.DataPropertyName = "PriceWithoutVAT";
+            PriceWithoutVAT.DataPropertyName = "PriceWithoutTax";
             PriceWithoutVAT.HeaderText = "Цена (без НДС)";
             PriceWithoutVAT.Name = "PriceWithoutVAT";
             PriceWithoutVAT.ReadOnly = true;
             // 
             // TotalPriceWithoutVAT
             // 
-            TotalPriceWithoutVAT.DataPropertyName = "TotalPriceWithoutVAT";
+            TotalPriceWithoutVAT.DataPropertyName = "TotalPriceWithoutTax";
             TotalPriceWithoutVAT.HeaderText = "Общая сумма товара";
             TotalPriceWithoutVAT.Name = "TotalPriceWithoutVAT";
             TotalPriceWithoutVAT.ReadOnly = true;
-            // 
-            // EditButton
-            // 
-            EditButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            EditButton.Image = (Image)resources.GetObject("EditButton.Image");
-            EditButton.ImageTransparentColor = Color.Magenta;
-            EditButton.Name = "EditButton";
-            EditButton.Size = new Size(126, 22);
-            EditButton.Text = "Изменение продукта";
-            EditButton.Click += EditButton_Click;
             // 
             // MainForm
             // 

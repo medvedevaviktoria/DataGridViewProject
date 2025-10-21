@@ -3,31 +3,31 @@
     /// <summary>
     /// Материал предмета
     /// </summary>
-    public enum Material: byte
+    public enum Material
     {
         /// <summary>
         /// Неизвестно
         /// </summary>
-        Unknown = 0,
+        Unknown,
 
         /// <summary>
         /// Медь
         /// </summary>
-        Copper = 1,
+        Copper,
 
         /// <summary>
         /// Сталь
         /// </summary>
-        Steel = 2,
+        Steel,
 
         /// <summary>
         /// Железо
         /// </summary>
-        Iron = 3,
+        Iron,
 
         /// <summary>
         /// Хром
         /// </summary>
-        Chrome = 4
+        Chrome
     }
 }

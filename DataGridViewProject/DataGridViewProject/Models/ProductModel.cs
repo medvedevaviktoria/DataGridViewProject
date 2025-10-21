@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DataGridViewProject.Classes;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataGridViewProject.Models
 {
@@ -9,59 +10,69 @@ namespace DataGridViewProject.Models
     public class ProductModel
     {
         /// <summary>
-        /// Идентификатор товара
+        /// Идентификатор продукта
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         /// <summary>
-        /// Наименование товара
+        /// Наименование продукта
         /// </summary>
-        [Required(ErrorMessage = "Заполните наименование продукта")]
-        [StringLength(255)]
+        [Display(Name = "Наименование продукта")]
+        [Required(ErrorMessage = "{0} обязательно для заполнения")]
+        [StringLength(AppConstants.ProductNameMaxLength, ErrorMessage = "{0} должен быть меньше {1} символов")]
         public string ProductName { get; set; } = string.Empty;
 
         /// <summary>
         /// Размер
         /// </summary>
-        [Required(ErrorMessage = "Заполните размер продукта")]
-        [StringLength(50)]
+        [Display(Name = "Размер продукта")]
+        [Required(ErrorMessage = "{0} обязателен для заполнения")]
+        [StringLength(AppConstants.ProductSizeMaxLength, ErrorMessage = "{0} должен быть меньше {1} символов")]
         public string ProductSize { get; set; } = string.Empty;
 
         /// <inheritdoc cref="Models.Material"/>
-        public Material Material { get; set; }
+        public Material Material { get; set; } = Material.Unknown;
 
         /// <summary>
         /// Количество на складе
         /// </summary>
-        [Range(0, 10000, ErrorMessage = "Количество должно быть от 0 до 10000")]
-        public int Quantity { get; set; }
+        [Display(Name = "Количество продуктов на складе")]
+        [Range(AppConstants.QuantityMin, AppConstants.QuantityMax, ErrorMessage = "{0} должно быть между {1} и {2}")]
+        public int Quantity { get; set; } = 0;
 
         /// <summary>
         /// Минимальный предел количества
         /// </summary>
-        [Range(0, 10000, ErrorMessage = "Минимальный предел должен от 0 до 10000")]
-        public int MinQuantity { get; set; }
+        [Display(Name = "Минимальный предел количества продукта")]
+        [Range(AppConstants.MinQuantityMin, AppConstants.MinQuantityMax, ErrorMessage = "{0} должен быть между {1} и {2}")]
+        public int MinQuantity { get; set; } = 0;
 
         /// <summary>
         /// Цена без НДС
         /// </summary>
-        [Range(0.01, 10000, ErrorMessage = "Цена должна быть в диапазоне от 0 до 10000")]
-        public decimal PriceWithoutVAT { get; set; }
+        [Display(Name = "Цена за продукт без НДС")]
+        [Range(AppConstants.PriceMin, AppConstants.PriceMax, ErrorMessage = "{0} должна быть в диапазоне от {1} до {2}")]
+        public decimal PriceWithoutTax { get; set; } = 0;
 
         /// <summary>
         /// Общая цена без НДС
         /// </summary>
-        public decimal TotalPriceWithoutVAT
+        public decimal TotalPriceWithoutTax
         {
-            get { return PriceWithoutVAT * Quantity; }
+            get { return PriceWithoutTax * Quantity; }
         }
 
         /// <summary>
         /// Общая цена с НДС
         /// </summary>
-        public decimal TotalPriceWithVAT
+        public decimal TotalPriceWithTax
         {
-            get { return TotalPriceWithoutVAT * 1.2m; } // 20% НДС 
+            get { return TotalPriceWithoutTax * AppConstants.TaxRate; } // 20% НДС 
+        }
+
+        public ProductModel Clone()
+        {
+            return (ProductModel)MemberwiseClone();
         }
     }
 }

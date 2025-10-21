@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             panel1 = new Panel();
             labelProductName = new Label();
             labelProductSize = new Label();
@@ -43,9 +44,11 @@
             numericUpDownPriceWithoutVAT = new NumericUpDown();
             buttonAddProduct = new Button();
             buttonCancel = new Button();
+            errorProvider1 = new ErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownMinQuantity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPriceWithoutVAT).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -137,7 +140,7 @@
             // numericUpDownQuantity
             // 
             numericUpDownQuantity.Location = new Point(279, 363);
-            numericUpDownQuantity.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numericUpDownQuantity.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownQuantity.Name = "numericUpDownQuantity";
             numericUpDownQuantity.Size = new Size(168, 23);
             numericUpDownQuantity.TabIndex = 10;
@@ -145,7 +148,7 @@
             // numericUpDownMinQuantity
             // 
             numericUpDownMinQuantity.Location = new Point(279, 413);
-            numericUpDownMinQuantity.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numericUpDownMinQuantity.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownMinQuantity.Name = "numericUpDownMinQuantity";
             numericUpDownMinQuantity.Size = new Size(168, 23);
             numericUpDownMinQuantity.TabIndex = 11;
@@ -178,6 +181,10 @@
             buttonCancel.Text = "Отмена";
             buttonCancel.UseVisualStyleBackColor = true;
             // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
+            // 
             // ProductForm
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -204,6 +211,7 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownMinQuantity).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPriceWithoutVAT).EndInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -225,5 +233,6 @@
         private NumericUpDown numericUpDownPriceWithoutVAT;
         private Button buttonAddProduct;
         private Button buttonCancel;
+        private ErrorProvider errorProvider1;
     }
 }
