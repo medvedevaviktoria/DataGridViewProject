@@ -11,37 +11,39 @@ namespace DataGridViewProject
 
         public MainForm()
         {
-            products = new List<ProductModel>();
-            products.Add(new ProductModel
-            {
-                Id = Guid.NewGuid(),
-                ProductName = "Гвозди медные декоративные",
-                ProductSize = "2x40 мм",
-                Material = Models.Material.Copper,
-                Quantity = 100,
-                MinQuantity = 45,
-                PriceWithoutTax = 1.25m
-            });
-            products.Add(new ProductModel
-            {
-                Id = Guid.NewGuid(),
-                ProductName = "Гвозди строительные",
-                ProductSize = "3x70 мм",
-                Material = Models.Material.Steel,
-                Quantity = 500,
-                MinQuantity = 100,
-                PriceWithoutTax = 0.75m
-            });
-            products.Add(new ProductModel
-            {
-                Id = Guid.NewGuid(),
-                ProductName = "Гвозди антикоррозийные",
-                ProductSize = "4x90 мм",
-                Material = Models.Material.Chrome,
-                Quantity = 300,
-                MinQuantity = 80,
-                PriceWithoutTax = 1.10m
-            });
+            products =
+            [
+                new ProductModel
+                {
+                    Id = Guid.NewGuid(),
+                    ProductName = "Гвозди медные декоративные",
+                    ProductSize = "2x40 мм",
+                    Material = Models.Material.Copper,
+                    Quantity = 100,
+                    MinQuantity = 45,
+                    PriceWithoutTax = 1.25m
+                },
+                new ProductModel
+                {
+                    Id = Guid.NewGuid(),
+                    ProductName = "Гвозди строительные",
+                    ProductSize = "3x70 мм",
+                    Material = Models.Material.Steel,
+                    Quantity = 500,
+                    MinQuantity = 100,
+                    PriceWithoutTax = 0.75m
+                },
+                new ProductModel
+                {
+                    Id = Guid.NewGuid(),
+                    ProductName = "Гвозди антикоррозийные",
+                    ProductSize = "4x90 мм",
+                    Material = Models.Material.Chrome,
+                    Quantity = 300,
+                    MinQuantity = 80,
+                    PriceWithoutTax = 1.10m
+                },
+            ];
             InitializeComponent();
             SetStatistic();
             dataGridView1.AutoGenerateColumns = false;
@@ -64,24 +66,14 @@ namespace DataGridViewProject
 
             if (col.DataPropertyName == nameof(ProductModel.Material))
             {
-                switch (product.Material)
+                e.Value = product.Material switch
                 {
-                    case Models.Material.Copper:
-                        e.Value = "Медь";
-                        break;
-                    case Models.Material.Steel:
-                        e.Value = "Сталь";
-                        break;
-                    case Models.Material.Iron:
-                        e.Value = "Железо";
-                        break;
-                    case Models.Material.Chrome:
-                        e.Value = "Хром";
-                        break;
-                    default:
-                        e.Value = string.Empty;
-                        break;
-                }
+                    Models.Material.Copper => "Медь",
+                    Models.Material.Steel => "Сталь",
+                    Models.Material.Iron => "Железо",
+                    Models.Material.Chrome => "Хром",
+                    _ => string.Empty,
+                };
             }
         }
 
@@ -91,8 +83,8 @@ namespace DataGridViewProject
         private void SetStatistic()
         {
             LabelQuantity.Text = $"Количество товаров: {products.Count}";
-            LabelPriceWithVAT.Text = $"Общая сумма товаров на складе(С НДС): {products.Sum(x => x.TotalPriceWithTax):F2} ₽";
-            LabelPriceWithoutVat.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {products.Sum(x => x.TotalPriceWithoutTax):F2} ₽";
+            LabelPriceWithTax.Text = $"Общая сумма товаров на складе(С НДС): {products.Sum(x => x.TotalPriceWithTax):F2} ₽";
+            LabelPriceWithoutTax.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {products.Sum(x => x.TotalPriceWithoutTax):F2} ₽";
         }
 
         /// <summary>

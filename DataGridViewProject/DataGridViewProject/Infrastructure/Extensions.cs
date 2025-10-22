@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace DataGridViewProject.Infrostructure
+namespace DataGridViewProject.Infrastructure
 {
     public static class Extensions
     {

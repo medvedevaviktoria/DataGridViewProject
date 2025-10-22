@@ -1,4 +1,4 @@
-﻿using DataGridViewProject.Infrostructure;
+﻿using DataGridViewProject.Infrastructure;
 using DataGridViewProject.Models;
 using System.ComponentModel.DataAnnotations;
 
@@ -23,12 +23,12 @@ namespace DataGridViewProject.Forms
             }
             comboBoxMaterial.DataSource = Enum.GetValues(typeof(Material));
 
-            comboBoxMaterial.AddBinding(x => x.SelectedItem, targetProduct, x => x.Material);
-            textBoxProductName.AddBinding(x => x.Text, targetProduct, x => x.ProductName);
-            textBoxProductSize.AddBinding(x => x.Text, targetProduct, x => x.ProductSize);
-            numericUpDownQuantity.AddBinding(x => x.Value, targetProduct, x => x.Quantity);
-            numericUpDownMinQuantity.AddBinding(x => x.Value, targetProduct, x => x.MinQuantity);
-            numericUpDownPriceWithoutVAT.AddBinding(x => x.Value, targetProduct, x => x.PriceWithoutTax);
+            comboBoxMaterial.AddBinding(x => x.SelectedItem, targetProduct, x => x.Material, errorProvider1);
+            textBoxProductName.AddBinding(x => x.Text, targetProduct, x => x.ProductName, errorProvider1);
+            textBoxProductSize.AddBinding(x => x.Text, targetProduct, x => x.ProductSize, errorProvider1);
+            numericUpDownQuantity.AddBinding(x => x.Value, targetProduct, x => x.Quantity, errorProvider1);
+            numericUpDownMinQuantity.AddBinding(x => x.Value, targetProduct, x => x.MinQuantity, errorProvider1);
+            numericUpDownPriceWithoutTax.AddBinding(x => x.Value, targetProduct, x => x.PriceWithoutTax, errorProvider1);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace DataGridViewProject.Forms
             var context = new ValidationContext(targetProduct);
             var results = new List<ValidationResult>();
 
-            bool isValid = Validator.TryValidateObject(targetProduct, context, results, true);
+            var isValid = Validator.TryValidateObject(targetProduct, context, results, true);
 
             if (isValid)
             {
@@ -65,7 +65,7 @@ namespace DataGridViewProject.Forms
                             nameof(ProductModel.ProductSize) => textBoxProductSize,
                             nameof(ProductModel.Quantity) => numericUpDownQuantity,
                             nameof(ProductModel.MinQuantity) => numericUpDownMinQuantity,
-                            nameof(ProductModel.PriceWithoutTax) => numericUpDownPriceWithoutVAT,
+                            nameof(ProductModel.PriceWithoutTax) => numericUpDownPriceWithoutTax,
                             nameof(ProductModel.Material) => comboBoxMaterial,
                             _ => null
                         };

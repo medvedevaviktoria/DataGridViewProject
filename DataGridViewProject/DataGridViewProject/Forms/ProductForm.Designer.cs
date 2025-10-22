@@ -35,19 +35,19 @@
             labelMaterial = new Label();
             labelQuantity = new Label();
             labelMinQuantity = new Label();
-            labelPriceWithoutVAT = new Label();
+            labelPriceWithoutTax = new Label();
             textBoxProductName = new TextBox();
             textBoxProductSize = new TextBox();
             comboBoxMaterial = new ComboBox();
             numericUpDownQuantity = new NumericUpDown();
             numericUpDownMinQuantity = new NumericUpDown();
-            numericUpDownPriceWithoutVAT = new NumericUpDown();
+            numericUpDownPriceWithoutTax = new NumericUpDown();
             buttonAddProduct = new Button();
             buttonCancel = new Button();
             errorProvider1 = new ErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownMinQuantity).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownPriceWithoutVAT).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownPriceWithoutTax).BeginInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
@@ -105,14 +105,14 @@
             labelMinQuantity.TabIndex = 5;
             labelMinQuantity.Text = "Минимальный предел количества:";
             // 
-            // labelPriceWithoutVAT
+            // labelPriceWithoutTax
             // 
-            labelPriceWithoutVAT.AutoSize = true;
-            labelPriceWithoutVAT.Location = new Point(72, 469);
-            labelPriceWithoutVAT.Name = "labelPriceWithoutVAT";
-            labelPriceWithoutVAT.Size = new Size(95, 15);
-            labelPriceWithoutVAT.TabIndex = 6;
-            labelPriceWithoutVAT.Text = "Цена (без НДС):";
+            labelPriceWithoutTax.AutoSize = true;
+            labelPriceWithoutTax.Location = new Point(72, 469);
+            labelPriceWithoutTax.Name = "labelPriceWithoutTax";
+            labelPriceWithoutTax.Size = new Size(95, 15);
+            labelPriceWithoutTax.TabIndex = 6;
+            labelPriceWithoutTax.Text = "Цена (без НДС):";
             // 
             // textBoxProductName
             // 
@@ -153,14 +153,14 @@
             numericUpDownMinQuantity.Size = new Size(168, 23);
             numericUpDownMinQuantity.TabIndex = 11;
             // 
-            // numericUpDownPriceWithoutVAT
+            // numericUpDownPriceWithoutTax
             // 
-            numericUpDownPriceWithoutVAT.DecimalPlaces = 2;
-            numericUpDownPriceWithoutVAT.Location = new Point(279, 467);
-            numericUpDownPriceWithoutVAT.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            numericUpDownPriceWithoutVAT.Name = "numericUpDownPriceWithoutVAT";
-            numericUpDownPriceWithoutVAT.Size = new Size(168, 23);
-            numericUpDownPriceWithoutVAT.TabIndex = 12;
+            numericUpDownPriceWithoutTax.DecimalPlaces = 2;
+            numericUpDownPriceWithoutTax.Location = new Point(279, 467);
+            numericUpDownPriceWithoutTax.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numericUpDownPriceWithoutTax.Name = "numericUpDownPriceWithoutTax";
+            numericUpDownPriceWithoutTax.Size = new Size(168, 23);
+            numericUpDownPriceWithoutTax.TabIndex = 12;
             // 
             // buttonAddProduct
             // 
@@ -192,13 +192,13 @@
             ClientSize = new Size(592, 643);
             Controls.Add(buttonCancel);
             Controls.Add(buttonAddProduct);
-            Controls.Add(numericUpDownPriceWithoutVAT);
+            Controls.Add(numericUpDownPriceWithoutTax);
             Controls.Add(numericUpDownMinQuantity);
             Controls.Add(numericUpDownQuantity);
             Controls.Add(comboBoxMaterial);
             Controls.Add(textBoxProductSize);
             Controls.Add(textBoxProductName);
-            Controls.Add(labelPriceWithoutVAT);
+            Controls.Add(labelPriceWithoutTax);
             Controls.Add(labelMinQuantity);
             Controls.Add(labelQuantity);
             Controls.Add(labelMaterial);
@@ -210,7 +210,7 @@
             Text = "Параметры продукта";
             ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownMinQuantity).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownPriceWithoutVAT).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownPriceWithoutTax).EndInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -224,13 +224,13 @@
         private Label labelMaterial;
         private Label labelQuantity;
         private Label labelMinQuantity;
-        private Label labelPriceWithoutVAT;
+        private Label labelPriceWithoutTax;
         private TextBox textBoxProductName;
         private TextBox textBoxProductSize;
         private ComboBox comboBoxMaterial;
         private NumericUpDown numericUpDownQuantity;
         private NumericUpDown numericUpDownMinQuantity;
-        private NumericUpDown numericUpDownPriceWithoutVAT;
+        private NumericUpDown numericUpDownPriceWithoutTax;
         private Button buttonAddProduct;
         private Button buttonCancel;
         private ErrorProvider errorProvider1;
