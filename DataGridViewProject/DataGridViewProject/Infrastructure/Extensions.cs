@@ -54,10 +54,8 @@ namespace DataGridViewProject.Infrastructure
                         // Если не валидно, проходимся по всем ошибкам и показываем их
                         if (!isValid)
                         {
-                            foreach (var error in results)
-                            {
-                                errorProvider.SetError(control, error.ErrorMessage);
-                            }
+                            // Выводим только ошибки для этого свойства
+                            errorProvider.SetError(control, string.Join("; ", results.Select(r => r.ErrorMessage)));
                         }
                     };
                 }
