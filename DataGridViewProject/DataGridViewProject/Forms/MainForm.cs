@@ -1,13 +1,13 @@
-﻿using DataGridViewProject.Forms;
+﻿using DataGridViewProject.Classes;
+using DataGridViewProject.Forms;
 using DataGridViewProject.Models;
-using System.Diagnostics;
 
 namespace DataGridViewProject
 {
     public partial class MainForm : Form
     {
         private readonly List<ProductModel> products;
-        private readonly BindingSource bindingSource = new();
+        private readonly BindingSource bindingSource = [];
 
         public MainForm()
         {
@@ -52,9 +52,6 @@ namespace DataGridViewProject
             dataGridView1.DataSource = bindingSource;
         }
 
-        /// <summary>
-        /// Обработчик события форматирования ячеек DataGridView
-        /// </summary>
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var col = dataGridView1.Columns[e.ColumnIndex];
@@ -75,21 +72,23 @@ namespace DataGridViewProject
                     _ => string.Empty,
                 };
             }
+
+            if (col.Name == "TotalPriceWithoutTax")
+            {
+                e.Value = product.PriceWithoutTax * product.Quantity;
+            }
         }
 
-        /// <summary>
-        /// Метод обновоения общих данных о товарах
-        /// </summary>
         private void SetStatistic()
         {
+            var totalWithoutTax = products.Sum(x => x.PriceWithoutTax * x.Quantity);// Расчёт общей суммы БЕЗ НДС
+            var totalWithTax = totalWithoutTax * AppConstants.TaxRate;// Расчёт общей суммы C НДС
+
             LabelQuantity.Text = $"Количество товаров: {products.Count}";
-            LabelPriceWithTax.Text = $"Общая сумма товаров на складе(С НДС): {products.Sum(x => x.TotalPriceWithTax):F2} ₽";
-            LabelPriceWithoutTax.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {products.Sum(x => x.TotalPriceWithoutTax):F2} ₽";
+            LabelPriceWithTax.Text = $"Общая сумма товаров на складе(С НДС): {totalWithTax:F2} ₽";
+            LabelPriceWithoutTax.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {totalWithoutTax:F2} ₽";
         }
 
-        /// <summary>
-        /// Обработчик нажатия кнопки Добавить товар
-        /// </summary>
         private void AddButton_Click(object sender, EventArgs e)
         {
             var addForm = new ProductForm();
@@ -100,9 +99,6 @@ namespace DataGridViewProject
             }
         }
 
-        /// <summary>
-        /// Обработчик нажатия кнопки Удалить товар
-        /// </summary>
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
@@ -123,9 +119,6 @@ namespace DataGridViewProject
             }
         }
 
-        /// <summary>
-        /// Обработчик нажатия кнопки Редактировать товар
-        /// </summary>
         private void EditButton_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
@@ -152,10 +145,7 @@ namespace DataGridViewProject
             }
         }
 
-        /// <summary>
-        /// Метод обновления всех данных на форме
-        /// </summary>
-        public void OnUpdate()
+        private void OnUpdate()
         {
             bindingSource.ResetBindings(false);
             SetStatistic();

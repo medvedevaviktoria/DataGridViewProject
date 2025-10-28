@@ -205,6 +205,9 @@
             Controls.Add(labelProductSize);
             Controls.Add(labelProductName);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "ProductForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Параметры продукта";

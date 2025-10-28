@@ -14,7 +14,16 @@ namespace DataGridViewProject.Forms
 
             if (sourceProduct != null)
             {
-                targetProduct = sourceProduct.Clone();
+                targetProduct = new ProductModel
+                {
+                    Id = sourceProduct.Id,
+                    ProductName = sourceProduct.ProductName,
+                    ProductSize = sourceProduct.ProductSize,
+                    Material = sourceProduct.Material,
+                    Quantity = sourceProduct.Quantity,
+                    MinQuantity = sourceProduct.MinQuantity,
+                    PriceWithoutTax = sourceProduct.PriceWithoutTax,
+                };
                 buttonAddProduct.Text = "Сохранить";
             }
             else
@@ -23,7 +32,7 @@ namespace DataGridViewProject.Forms
             }
             comboBoxMaterial.DataSource = Enum.GetValues(typeof(Material));
 
-            comboBoxMaterial.AddBinding(x => x.SelectedItem, targetProduct, x => x.Material, errorProvider1);
+            comboBoxMaterial.AddBinding(x => x.SelectedItem, targetProduct, x => x.Material);
             textBoxProductName.AddBinding(x => x.Text, targetProduct, x => x.ProductName, errorProvider1);
             textBoxProductSize.AddBinding(x => x.Text, targetProduct, x => x.ProductSize, errorProvider1);
             numericUpDownQuantity.AddBinding(x => x.Value, targetProduct, x => x.Quantity, errorProvider1);
@@ -36,9 +45,6 @@ namespace DataGridViewProject.Forms
         /// </summary>
         public ProductModel CurrentProduct => targetProduct;
 
-        /// <summary>
-        /// Метод обработки клика кнопки "Добавить" или "Сохранить"
-        /// </summary>
         private void buttonAddProduct_Click(object sender, EventArgs e)
         {
             errorProvider1.Clear();

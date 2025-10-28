@@ -1,6 +1,6 @@
 ﻿namespace DataGridViewProject.Classes
 {
-    public static class AppConstants
+    public class AppConstants
     {
         /// <summary>
         /// Минимальный лимит для количества продукта

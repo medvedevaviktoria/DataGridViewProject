@@ -38,41 +38,20 @@ namespace DataGridViewProject.Models
         /// </summary>
         [Display(Name = "Количество продуктов на складе")]
         [Range(AppConstants.QuantityMin, AppConstants.QuantityMax, ErrorMessage = "{0} должно быть между {1} и {2}")]
-        public int Quantity { get; set; } = 0;
+        public int Quantity { get; set; }
 
         /// <summary>
         /// Минимальный предел количества
         /// </summary>
         [Display(Name = "Минимальный предел количества продукта")]
         [Range(AppConstants.MinQuantityMin, AppConstants.MinQuantityMax, ErrorMessage = "{0} должен быть между {1} и {2}")]
-        public int MinQuantity { get; set; } = 0;
+        public int MinQuantity { get; set; }
 
         /// <summary>
         /// Цена без НДС
         /// </summary>
         [Display(Name = "Цена за продукт без НДС")]
         [Range(AppConstants.PriceMin, AppConstants.PriceMax, ErrorMessage = "{0} должна быть в диапазоне от {1} до {2}")]
-        public decimal PriceWithoutTax { get; set; } = 0;
-
-        /// <summary>
-        /// Общая цена без НДС
-        /// </summary>
-        public decimal TotalPriceWithoutTax
-        {
-            get { return PriceWithoutTax * Quantity; }
-        }
-
-        /// <summary>
-        /// Общая цена с НДС
-        /// </summary>
-        public decimal TotalPriceWithTax
-        {
-            get { return TotalPriceWithoutTax * AppConstants.TaxRate; } // 20% НДС 
-        }
-
-        public ProductModel Clone()
-        {
-            return (ProductModel)MemberwiseClone();
-        }
+        public decimal PriceWithoutTax { get; set; }
     }
 }

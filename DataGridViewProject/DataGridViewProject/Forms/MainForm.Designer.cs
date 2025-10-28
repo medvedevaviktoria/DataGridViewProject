@@ -171,14 +171,13 @@
             // PriceWithoutTax
             // 
             PriceWithoutTax.DataPropertyName = "PriceWithoutTax";
-            PriceWithoutTax.HeaderText = "Цена (без НДС)";
+            PriceWithoutTax.HeaderText = "Цена за 1 шт.";
             PriceWithoutTax.Name = "PriceWithoutTax";
             PriceWithoutTax.ReadOnly = true;
             // 
             // TotalPriceWithoutTax
             // 
-            TotalPriceWithoutTax.DataPropertyName = "TotalPriceWithoutTax";
-            TotalPriceWithoutTax.HeaderText = "Общая сумма товара";
+            TotalPriceWithoutTax.HeaderText = "Общая сумма товара(БЕЗ НДС)";
             TotalPriceWithoutTax.Name = "TotalPriceWithoutTax";
             TotalPriceWithoutTax.ReadOnly = true;
             // 
@@ -191,6 +190,9 @@
             Controls.Add(statusStrip1);
             Controls.Add(toolStrip1);
             DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Автоматизация склада гвоздей";
