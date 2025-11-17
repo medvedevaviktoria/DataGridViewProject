@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject", "DataGridViewProject\DataGridViewProject.csproj", "{011C171E-F1F1-47A6-967C-C26C7EBBDA00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.App", "DataGridViewProject\DataGridViewProject.App.csproj", "{011C171E-F1F1-47A6-967C-C26C7EBBDA00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{2CAE2DDF-29FC-4580-9914-E844267D8930}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Entities", "Entities\DataGridViewProject.Entities.csproj", "{2CAE2DDF-29FC-4580-9914-E844267D8930}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{D9927F19-B052-41AA-B39D-0B11FC2247E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Services", "Services\DataGridViewProject.Services.csproj", "{D9927F19-B052-41AA-B39D-0B11FC2247E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Contracts", "Services.Contracts\Services.Contracts.csproj", "{2DF88F91-158C-44ED-A0CD-C0CA1F4D87C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Services.Contracts", "Services.Contracts\DataGridViewProject.Services.Contracts.csproj", "{2DF88F91-158C-44ED-A0CD-C0CA1F4D87C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Constants", "Constants\Constants.csproj", "{1ECAB22E-7090-40AC-B620-2CAB8F795E86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Constants", "Constants\DataGridViewProject.Constants.csproj", "{1ECAB22E-7090-40AC-B620-2CAB8F795E86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
