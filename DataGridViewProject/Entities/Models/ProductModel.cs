@@ -1,4 +1,4 @@
-﻿using Entities.Classes;
+﻿using Constants;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataGridViewProject.Models

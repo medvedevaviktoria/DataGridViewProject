@@ -12,12 +12,11 @@ namespace Services
 
         public InMemoryStorage()
         {
-            // Инициализация тестовыми данными
-            products = new List<ProductModel>
-            {
+            // Начальные данные
+            products =
+            [
                 new ProductModel
                 {
-                    Id = Guid.NewGuid(),
                     ProductName = "Гвозди медные декоративные",
                     ProductSize = "2x40 мм",
                     Material = Material.Copper,
@@ -27,7 +26,6 @@ namespace Services
                 },
                 new ProductModel
                 {
-                    Id = Guid.NewGuid(),
                     ProductName = "Гвозди строительные",
                     ProductSize = "3x70 мм",
                     Material = Material.Steel,
@@ -37,7 +35,6 @@ namespace Services
                 },
                 new ProductModel
                 {
-                    Id = Guid.NewGuid(),
                     ProductName = "Гвозди антикоррозийные",
                     ProductSize = "4x90 мм",
                     Material = Material.Chrome,
@@ -45,7 +42,7 @@ namespace Services
                     MinQuantity = 80,
                     PriceWithoutTax = 1.10m
                 }
-            };
+            ];
         }
 
         /// <summary>
@@ -117,6 +114,17 @@ namespace Services
             var total = products.Sum(p => p.PriceWithoutTax * p.Quantity);
             var totalWithTax = total * 1.2m;
             return await Task.FromResult(totalWithTax);
+        }
+
+        /// <summary>
+        /// Получить общую стоимость товара БЕЗ НДС (Цена * Количество)
+        /// </summary>
+        public async Task<decimal> GetProductTotalPriceWithoutTax(Guid id)
+        {
+            var product = products.FirstOrDefault(p => p.Id == id);
+
+            var totalPrice = product.PriceWithoutTax * product.Quantity;
+            return await Task.FromResult(totalPrice);
         }
     }
 }

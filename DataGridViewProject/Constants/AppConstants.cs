@@ -1,4 +1,4 @@
-﻿namespace Entities.Classes
+﻿namespace Constants
 {
     public class AppConstants
     {

@@ -43,5 +43,10 @@ namespace Services.Contracts
         /// Получить общую стоимость всех товаров С НДС (20%)
         /// </summary>
         public Task<decimal> GetTotalPriceWithTax();
+
+        /// <summary>
+        /// Получить общую стоимость товара БЕЗ НДС (Цена * Количество)
+        /// </summary>
+        public Task<decimal> GetProductTotalPriceWithoutTax(Guid id);
     }
 }

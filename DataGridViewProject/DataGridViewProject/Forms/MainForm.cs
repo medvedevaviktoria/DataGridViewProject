@@ -1,58 +1,58 @@
-﻿using DataGridViewProject.Forms;
+﻿using Constants;
+using DataGridViewProject.Forms;
 using DataGridViewProject.Models;
-using Entities.Classes;
+using Services;
+using Services.Contracts;
 
 namespace DataGridViewProject
 {
     public partial class MainForm : Form
     {
-        private readonly List<ProductModel> products;
+        private readonly IProductService productService;
         private readonly BindingSource bindingSource = [];
 
         public MainForm()
         {
-            products =
-            [
-                new ProductModel
-                {
-                    Id = Guid.NewGuid(),
-                    ProductName = "Гвозди медные декоративные",
-                    ProductSize = "2x40 мм",
-                    Material = Models.Material.Copper,
-                    Quantity = 100,
-                    MinQuantity = 45,
-                    PriceWithoutTax = 1.25m
-                },
-                new ProductModel
-                {
-                    Id = Guid.NewGuid(),
-                    ProductName = "Гвозди строительные",
-                    ProductSize = "3x70 мм",
-                    Material = Models.Material.Steel,
-                    Quantity = 500,
-                    MinQuantity = 100,
-                    PriceWithoutTax = 0.75m
-                },
-                new ProductModel
-                {
-                    Id = Guid.NewGuid(),
-                    ProductName = "Гвозди антикоррозийные",
-                    ProductSize = "4x90 мм",
-                    Material = Models.Material.Chrome,
-                    Quantity = 300,
-                    MinQuantity = 80,
-                    PriceWithoutTax = 1.10m
-                },
-            ];
             InitializeComponent();
-            SetStatistic();
+            productService = new InMemoryStorage();
             dataGridView1.AutoGenerateColumns = false;
 
-            bindingSource.DataSource = products;
-            dataGridView1.DataSource = bindingSource;
         }
 
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private async void MainForm_Load(object sender, EventArgs e)
+        {
+            await LoadData();
+        }
+
+        private async Task LoadData()
+        {
+            var products = await productService.GetAllProducts();
+            bindingSource.DataSource = products.ToList();
+            dataGridView1.DataSource = bindingSource;
+            await SetStatistic();
+        }
+
+        private async Task OnUpdate()
+        {
+            var products = await productService.GetAllProducts();  
+            //bindingSource.Clear(); 
+            bindingSource.DataSource = products.ToList();
+            bindingSource.ResetBindings(false);
+            await SetStatistic();
+        }
+
+        private async Task SetStatistic()
+        {
+            var productCount = await productService.GetProductCount(); // Количество всех товаров на складе
+            var totalWithoutTax = await productService.GetTotalPrice();// Расчёт общей суммы БЕЗ НДС
+            var totalWithTax = await productService.GetTotalPriceWithTax(); // Расчёт общей суммы C НДС
+
+            LabelQuantity.Text = $"Количество товаров: {productCount}";
+            LabelPriceWithTax.Text = $"Общая сумма товаров на складе(С НДС): {totalWithTax:F2} ₽";
+            LabelPriceWithoutTax.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {totalWithoutTax:F2} ₽";
+        }
+
+        private async void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var col = dataGridView1.Columns[e.ColumnIndex];
             var product = (ProductModel)dataGridView1.Rows[e.RowIndex].DataBoundItem;
@@ -75,31 +75,22 @@ namespace DataGridViewProject
 
             if (col.Name == "TotalPriceWithoutTax")
             {
-                e.Value = product.PriceWithoutTax * product.Quantity;
+                var totalPriceWithoutTax = await productService.GetProductTotalPriceWithoutTax(product.Id);
+                e.Value = totalPriceWithoutTax;
             }
         }
 
-        private void SetStatistic()
-        {
-            var totalWithoutTax = products.Sum(x => x.PriceWithoutTax * x.Quantity);// Расчёт общей суммы БЕЗ НДС
-            var totalWithTax = totalWithoutTax * AppConstants.TaxRate;// Расчёт общей суммы C НДС
-
-            LabelQuantity.Text = $"Количество товаров: {products.Count}";
-            LabelPriceWithTax.Text = $"Общая сумма товаров на складе(С НДС): {totalWithTax:F2} ₽";
-            LabelPriceWithoutTax.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {totalWithoutTax:F2} ₽";
-        }
-
-        private void AddButton_Click(object sender, EventArgs e)
+        private async void AddButton_Click(object sender, EventArgs e)
         {
             var addForm = new ProductForm();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                products.Add(addForm.CurrentProduct);
-                OnUpdate();
+                await productService.AddProduct(addForm.CurrentProduct);
+                await OnUpdate();
             }
         }
 
-        private void DeleteButton_Click(object sender, EventArgs e)
+        private async void DeleteButton_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
             {
@@ -107,23 +98,19 @@ namespace DataGridViewProject
             }
 
             var product = (ProductModel)dataGridView1.SelectedRows[0].DataBoundItem;
-            var target = products.FirstOrDefault(x => x.Id == product.Id);
-            if (target != null &&
-                MessageBox.Show($"Вы действительно желаете удалить '{target.ProductName}'?",
-                "Удаление продукта",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show($"Удалить '{product.ProductName}'?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                products.Remove(target);
-                OnUpdate();
+                await productService.DeleteProduct(product.Id);
+                await OnUpdate();
+
             }
         }
 
-        private void EditButton_Click(object sender, EventArgs e)
+        private async void EditButton_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
             {
-                return; 
+                return;
             }
 
             var product = (ProductModel)dataGridView1.SelectedRows[0].DataBoundItem;
@@ -131,24 +118,9 @@ namespace DataGridViewProject
             var editForm = new ProductForm(product);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                var target = products.FirstOrDefault(x => x.Id == editForm.CurrentProduct.Id);
-                if (target != null)
-                {
-                    target.ProductName = editForm.CurrentProduct.ProductName;
-                    target.ProductSize = editForm.CurrentProduct.ProductSize;
-                    target.Material = editForm.CurrentProduct.Material;
-                    target.Quantity = editForm.CurrentProduct.Quantity;
-                    target.MinQuantity = editForm.CurrentProduct.MinQuantity;
-                    target.PriceWithoutTax = editForm.CurrentProduct.PriceWithoutTax;
-                    OnUpdate();
-                }
+                await productService.UpdateProduct(editForm.CurrentProduct);
+                await OnUpdate();
             }
-        }
-
-        private void OnUpdate()
-        {
-            bindingSource.ResetBindings(false);
-            SetStatistic();
         }
     }
 }
