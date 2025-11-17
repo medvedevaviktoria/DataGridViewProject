@@ -11,10 +11,10 @@ namespace DataGridViewProject
         private readonly IProductService productService;
         private readonly BindingSource bindingSource = [];
 
-        public MainForm()
+        public MainForm(IProductService productService)
         {
             InitializeComponent();
-            productService = new InMemoryStorage();
+            this.productService = productService;
             dataGridView1.AutoGenerateColumns = false;
 
         }
