@@ -1,6 +1,6 @@
-﻿using DataGridViewProject.Classes;
-using DataGridViewProject.Forms;
+﻿using DataGridViewProject.Forms;
 using DataGridViewProject.Models;
+using Entities.Classes;
 
 namespace DataGridViewProject
 {

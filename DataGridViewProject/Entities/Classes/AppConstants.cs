@@ -1,4 +1,4 @@
-﻿namespace DataGridViewProject.Classes
+﻿namespace Entities.Classes
 {
     public class AppConstants
     {
