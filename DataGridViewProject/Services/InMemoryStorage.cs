@@ -94,5 +94,29 @@ namespace Services
         /// Найти товар по ID
         /// </summary>
         public async Task<ProductModel> GetProductById(Guid id) => await Task.FromResult(products.FirstOrDefault(p => p.Id == id));
+
+        /// <summary>
+        /// Получить общее количество всех товаров на складе
+        /// </summary>
+        public async Task<int> GetProductCount() => await Task.FromResult(products.Count);
+
+        /// <summary>
+        /// Получить общую стоимость всех товаров БЕЗ НДС
+        /// </summary>
+        public async Task<decimal> GetTotalPrice()
+        {
+            var total = products.Sum(p => p.PriceWithoutTax * p.Quantity);
+            return await Task.FromResult(total);
+        }
+
+        /// <summary>
+        /// Получить общую стоимость всех товаров С НДС (20%)
+        /// </summary>
+        public async Task<decimal> GetTotalPriceWithTax()
+        {
+            var total = products.Sum(p => p.PriceWithoutTax * p.Quantity);
+            var totalWithTax = total * 1.2m;
+            return await Task.FromResult(totalWithTax);
+        }
     }
 }

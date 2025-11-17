@@ -28,5 +28,20 @@ namespace Services.Contracts
         /// Найти товар по ID
         /// </summary>
         public Task<ProductModel> GetProductById(Guid id);
+
+        /// <summary>
+        /// Получить общее количество всех товаров на складе
+        /// </summary>
+        public Task<int> GetProductCount();
+
+        /// <summary>
+        /// Получить общую стоимость всех товаров БЕЗ НДС
+        /// </summary>
+        public Task<decimal> GetTotalPrice();
+
+        /// <summary>
+        /// Получить общую стоимость всех товаров С НДС (20%)
+        /// </summary>
+        public Task<decimal> GetTotalPriceWithTax();
     }
 }
