@@ -7,7 +7,7 @@
 		<Authors>medvedevaviktoria</Authors>
 		<Product>medvedevaviktoria.$(AssemblyName)</Product>
 		<Description>DataGridViewProject.Services Медведева Виктория ИП 22-3</Description>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<PackageTags>Storage; InMemoryStorage; Service</PackageTags>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
