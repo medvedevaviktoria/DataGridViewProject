@@ -1,4 +1,4 @@
-﻿namespace DataGridViewProject.Models
+﻿namespace DataGridViewProject.Entities.Models
 {
     /// <summary>
     /// Материал предмета

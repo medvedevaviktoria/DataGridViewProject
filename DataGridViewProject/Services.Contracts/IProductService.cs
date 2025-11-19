@@ -1,7 +1,10 @@
-﻿using DataGridViewProject.Models;
+﻿using DataGridViewProject.Entities.Models;
 
-namespace Services.Contracts
+namespace DataGridViewProject.Services.Contracts
 {
+    /// <summary>
+    /// Интерфейс сервиса для управления информации о товарах
+    /// </summary>
     public interface IProductService
     {
         /// <summary>
@@ -27,26 +30,17 @@ namespace Services.Contracts
         /// <summary>
         /// Найти товар по ID
         /// </summary>
-        public Task<ProductModel> GetProductById(Guid id);
-
-        /// <summary>
-        /// Получить общее количество всех товаров на складе
-        /// </summary>
-        public Task<int> GetProductCount();
-
-        /// <summary>
-        /// Получить общую стоимость всех товаров БЕЗ НДС
-        /// </summary>
-        public Task<decimal> GetTotalPrice();
-
-        /// <summary>
-        /// Получить общую стоимость всех товаров С НДС (20%)
-        /// </summary>
-        public Task<decimal> GetTotalPriceWithTax();
+        public Task<ProductModel?> GetProductById(Guid id);
 
         /// <summary>
         /// Получить общую стоимость товара БЕЗ НДС (Цена * Количество)
         /// </summary>
         public Task<decimal> GetProductTotalPriceWithoutTax(Guid id);
+
+        /// <summary>
+        /// Получить статистику по продуктам на складе
+        /// </summary>
+        /// <returns></returns>
+        public Task<ProductStatistics> GetStatistics();
     }
 }

@@ -1,7 +1,8 @@
-﻿using Services;
-using Services.Contracts;
+﻿using DataGridViewProject.Services.Contracts;
+using DataGridViewProject.Services;
+using DataGridViewProject.Forms;
 
-namespace DataGridViewProject
+namespace DataGridViewProject.App
 {
     internal static class Program
     {

@@ -1,22 +1,24 @@
-﻿using Constants;
-using DataGridViewProject.Forms;
-using DataGridViewProject.Models;
-using Services;
-using Services.Contracts;
+﻿using DataGridViewProject.Entities.Models;
+using DataGridViewProject.Services.Contracts;
 
-namespace DataGridViewProject
+namespace DataGridViewProject.Forms
 {
+    /// <summary>
+    /// Главная форма программы
+    /// </summary>
     public partial class MainForm : Form
     {
         private readonly IProductService productService;
         private readonly BindingSource bindingSource = [];
 
+        /// <summary>
+        /// Инициализирует экземпляр <see cref="<MainForm>"/>
+        /// </summary>
         public MainForm(IProductService productService)
         {
             InitializeComponent();
             this.productService = productService;
             dataGridView1.AutoGenerateColumns = false;
-
         }
 
         private async void MainForm_Load(object sender, EventArgs e)
@@ -34,8 +36,7 @@ namespace DataGridViewProject
 
         private async Task OnUpdate()
         {
-            var products = await productService.GetAllProducts();  
-            //bindingSource.Clear(); 
+            var products = await productService.GetAllProducts();
             bindingSource.DataSource = products.ToList();
             bindingSource.ResetBindings(false);
             await SetStatistic();
@@ -43,16 +44,13 @@ namespace DataGridViewProject
 
         private async Task SetStatistic()
         {
-            var productCount = await productService.GetProductCount(); // Количество всех товаров на складе
-            var totalWithoutTax = await productService.GetTotalPrice();// Расчёт общей суммы БЕЗ НДС
-            var totalWithTax = await productService.GetTotalPriceWithTax(); // Расчёт общей суммы C НДС
-
-            LabelQuantity.Text = $"Количество товаров: {productCount}";
-            LabelPriceWithTax.Text = $"Общая сумма товаров на складе(С НДС): {totalWithTax:F2} ₽";
-            LabelPriceWithoutTax.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {totalWithoutTax:F2} ₽";
+            var statistics = await productService.GetStatistics();
+            LabelQuantity.Text = $"Количество товаров: {statistics.ProductCount}";
+            LabelPriceWithTax.Text = $"Общая сумма товаров на складе(С НДС): {statistics.TotalWithTax:F2} ₽";
+            LabelPriceWithoutTax.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {statistics.TotalWithoutTax:F2} ₽";
         }
 
-        private async void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private async void DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var col = dataGridView1.Columns[e.ColumnIndex];
             var product = (ProductModel)dataGridView1.Rows[e.RowIndex].DataBoundItem;
@@ -65,10 +63,10 @@ namespace DataGridViewProject
             {
                 e.Value = product.Material switch
                 {
-                    Models.Material.Copper => "Медь",
-                    Models.Material.Steel => "Сталь",
-                    Models.Material.Iron => "Железо",
-                    Models.Material.Chrome => "Хром",
+                    Entities.Models.Material.Copper => "Медь",
+                    Entities.Models.Material.Steel => "Сталь",
+                    Entities.Models.Material.Iron => "Железо",
+                    Entities.Models.Material.Chrome => "Хром",
                     _ => string.Empty,
                 };
             }

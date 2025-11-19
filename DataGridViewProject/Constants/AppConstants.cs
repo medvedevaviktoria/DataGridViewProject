@@ -1,5 +1,8 @@
-﻿namespace Constants
+﻿namespace DataGridViewProject.Constants
 {
+    /// <summary>
+    /// Класс с константами
+    /// </summary>
     public class AppConstants
     {
         /// <summary>

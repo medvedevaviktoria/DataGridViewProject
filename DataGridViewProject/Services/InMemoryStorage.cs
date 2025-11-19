@@ -1,15 +1,19 @@
-﻿using DataGridViewProject.Models;
-using Services.Contracts;
+﻿using DataGridViewProject.Constants;
+using DataGridViewProject.Entities.Models;
+using DataGridViewProject.Services.Contracts;
 
-namespace Services
+namespace DataGridViewProject.Services
 {
     /// <summary>
     /// Сервис для доступа к товарам, хранящимся в памяти
     /// </summary>
     public class InMemoryStorage : IProductService
     {
-        private List<ProductModel> products;
+        private readonly List<ProductModel> products;
 
+        /// <summary>
+        /// Инициализация экземпляра InMemoryStorage
+        /// </summary>
         public InMemoryStorage()
         {
             // Начальные данные
@@ -45,26 +49,22 @@ namespace Services
             ];
         }
 
-        /// <summary>
-        /// Получить все товары
-        /// </summary>
-        public async Task<IEnumerable<ProductModel>> GetAllProducts() => await Task.FromResult<IEnumerable<ProductModel>>(products.ToList());
+        /// <inheritdoc/>
+        public async Task<IEnumerable<ProductModel>> GetAllProducts() => await Task.FromResult<IEnumerable<ProductModel>>(products);
 
-        /// <summary>
-        /// Добавить новый товар
-        /// </summary>
-        public async Task AddProduct(ProductModel product)
+        async Task IProductService.AddProduct(ProductModel product)
         {
             products.Add(product);
             await Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Обновить товар
-        /// </summary>
-        public async Task UpdateProduct(ProductModel product)
+        async Task IProductService.UpdateProduct(ProductModel product)
         {
             var existingProduct = products.FirstOrDefault(p => p.Id == product.Id);
+            if (existingProduct == null)
+            {
+                return;
+            }
 
             existingProduct.ProductName = product.ProductName;
             existingProduct.ProductSize = product.ProductSize;
@@ -76,55 +76,41 @@ namespace Services
             await Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Удалить товар по ID
-        /// </summary>
-        public async Task DeleteProduct(Guid id)
+        async Task IProductService.DeleteProduct(Guid id)
         {
-            var product = products.FirstOrDefault(p => p.Id == id);
-            products.Remove(product);
+            var existingProduct = products.FirstOrDefault(p => p.Id == id);
+            if (existingProduct == null)
+            {
+                return;
+            }
+            products.Remove(existingProduct);
 
             await Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Найти товар по ID
-        /// </summary>
-        public async Task<ProductModel> GetProductById(Guid id) => await Task.FromResult(products.FirstOrDefault(p => p.Id == id));
+        async Task<ProductModel?> IProductService.GetProductById(Guid id) => await Task.FromResult(products.FirstOrDefault(p => p.Id == id));
 
-        /// <summary>
-        /// Получить общее количество всех товаров на складе
-        /// </summary>
-        public async Task<int> GetProductCount() => await Task.FromResult(products.Count);
-
-        /// <summary>
-        /// Получить общую стоимость всех товаров БЕЗ НДС
-        /// </summary>
-        public async Task<decimal> GetTotalPrice()
-        {
-            var total = products.Sum(p => p.PriceWithoutTax * p.Quantity);
-            return await Task.FromResult(total);
-        }
-
-        /// <summary>
-        /// Получить общую стоимость всех товаров С НДС (20%)
-        /// </summary>
-        public async Task<decimal> GetTotalPriceWithTax()
-        {
-            var total = products.Sum(p => p.PriceWithoutTax * p.Quantity);
-            var totalWithTax = total * 1.2m;
-            return await Task.FromResult(totalWithTax);
-        }
-
-        /// <summary>
-        /// Получить общую стоимость товара БЕЗ НДС (Цена * Количество)
-        /// </summary>
-        public async Task<decimal> GetProductTotalPriceWithoutTax(Guid id)
+        async Task<decimal> IProductService.GetProductTotalPriceWithoutTax(Guid id)
         {
             var product = products.FirstOrDefault(p => p.Id == id);
-
+            if (product == null)
+            {
+                return 0;
+            }
             var totalPrice = product.PriceWithoutTax * product.Quantity;
             return await Task.FromResult(totalPrice);
+        }
+
+        async Task<ProductStatistics> IProductService.GetStatistics()
+        {
+            var products = await GetAllProducts();
+            var statistics = new ProductStatistics
+            {
+                ProductCount = products.Count(),
+                TotalWithoutTax = products.Sum(p => p.PriceWithoutTax * p.Quantity),
+                TotalWithTax = products.Sum(p => p.PriceWithoutTax * AppConstants.TaxRate * p.Quantity)
+            };
+            return statistics;
         }
     }
 }

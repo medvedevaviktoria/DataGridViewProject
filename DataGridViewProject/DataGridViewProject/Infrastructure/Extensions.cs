@@ -2,11 +2,16 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace DataGridViewProject.Infrastructure
+namespace DataGridViewProject.App.Infrastructure
 {
+    /// <summary>
+    /// Класс с расширениями
+    /// </summary>
     public static class Extensions
     {
-
+        /// <summary>
+        /// Метод добавления привязки свойств модели к свойству элемента управления
+        /// </summary>
         public static void AddBinding<TControl, TSource>(
             this TControl control, // тип элемента управления
             Expression<Func<TControl,object>> destinationProperty, // свойство контрола, которое будет связано
@@ -61,11 +66,7 @@ namespace DataGridViewProject.Infrastructure
                 }
             }
         }
-
-        /// <summary>
-        /// Метод извлечения имени свойства из лямбда-выражения
-        /// </summary>
-        static string GetPropertyName<TType>(Expression<Func<TType, object>> expression)
+        private static string GetPropertyName<TType>(Expression<Func<TType, object>> expression)
         {
             Expression body = expression.Body;
             if (body.NodeType == ExpressionType.Convert)
