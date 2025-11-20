@@ -1,13 +1,19 @@
-﻿using DataGridViewProject.Infrastructure;
-using DataGridViewProject.Models;
+﻿using DataGridViewProject.App.Infrastructure;
+using DataGridViewProject.Entities.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataGridViewProject.Forms
 {
+    /// <summary>
+    /// Форма редактирования/добавления продукта
+    /// </summary>
     public partial class ProductForm : Form
     {
         private readonly ProductModel targetProduct;
 
+        /// <summary>
+        /// Инициализирует экземпляр <see cref="<ProductForm>"/>
+        /// </summary>
         public ProductForm(ProductModel? sourceProduct = null)
         {
             InitializeComponent();
@@ -32,7 +38,7 @@ namespace DataGridViewProject.Forms
             }
             comboBoxMaterial.DataSource = Enum.GetValues(typeof(Material));
 
-            comboBoxMaterial.AddBinding(x => x.SelectedItem, targetProduct, x => x.Material);
+            comboBoxMaterial.AddBinding(x => x.SelectedItem!, targetProduct, x => x.Material);
             textBoxProductName.AddBinding(x => x.Text, targetProduct, x => x.ProductName, errorProvider1);
             textBoxProductSize.AddBinding(x => x.Text, targetProduct, x => x.ProductSize, errorProvider1);
             numericUpDownQuantity.AddBinding(x => x.Value, targetProduct, x => x.Quantity, errorProvider1);
@@ -45,7 +51,7 @@ namespace DataGridViewProject.Forms
         /// </summary>
         public ProductModel CurrentProduct => targetProduct;
 
-        private void buttonAddProduct_Click(object sender, EventArgs e)
+        private void ButtonAddProduct_Click(object sender, EventArgs e)
         {
             errorProvider1.Clear();
 

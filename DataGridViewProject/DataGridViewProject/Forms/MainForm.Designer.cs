@@ -1,4 +1,4 @@
-﻿namespace DataGridViewProject
+﻿namespace DataGridViewProject.Forms
 {
     partial class MainForm
     {
@@ -38,7 +38,7 @@
             LabelPriceWithTax = new ToolStripStatusLabel();
             LabelPriceWithoutTax = new ToolStripStatusLabel();
             dataGridView1 = new DataGridView();
-            ProductName = new DataGridViewTextBoxColumn();
+            ProductDisplayName = new DataGridViewTextBoxColumn();
             ProductSize = new DataGridViewTextBoxColumn();
             Material = new DataGridViewTextBoxColumn();
             Quantity = new DataGridViewTextBoxColumn();
@@ -122,7 +122,7 @@
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ProductName, ProductSize, Material, Quantity, MinQuantity, PriceWithoutTax, TotalPriceWithoutTax });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ProductDisplayName, ProductSize, Material, Quantity, MinQuantity, PriceWithoutTax, TotalPriceWithoutTax });
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(0, 25);
             dataGridView1.MultiSelect = false;
@@ -131,14 +131,14 @@
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(1044, 538);
             dataGridView1.TabIndex = 3;
-            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+            dataGridView1.CellFormatting += DataGridView1_CellFormatting;
             // 
-            // ProductName
+            // ProductDisplayName
             // 
-            ProductName.DataPropertyName = "ProductName";
-            ProductName.HeaderText = "Наименование товара";
-            ProductName.Name = "ProductName";
-            ProductName.ReadOnly = true;
+            ProductDisplayName.DataPropertyName = "ProductName";
+            ProductDisplayName.HeaderText = "Наименование товара";
+            ProductDisplayName.Name = "ProductDisplayName";
+            ProductDisplayName.ReadOnly = true;
             // 
             // ProductSize
             // 
@@ -196,6 +196,7 @@
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Автоматизация склада гвоздей";
+            Load += MainForm_Load;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             statusStrip1.ResumeLayout(false);
@@ -215,7 +216,7 @@
         private ToolStripButton AddButton;
         private ToolStripButton DeleteButton;
         private ToolStripButton EditButton;
-        private DataGridViewTextBoxColumn ProductName;
+        private DataGridViewTextBoxColumn ProductDisplayName;
         private DataGridViewTextBoxColumn ProductSize;
         private DataGridViewTextBoxColumn Material;
         private DataGridViewTextBoxColumn Quantity;

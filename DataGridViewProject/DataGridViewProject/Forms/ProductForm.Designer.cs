@@ -170,7 +170,7 @@
             buttonAddProduct.TabIndex = 13;
             buttonAddProduct.Text = "Добавить";
             buttonAddProduct.UseVisualStyleBackColor = true;
-            buttonAddProduct.Click += buttonAddProduct_Click;
+            buttonAddProduct.Click += ButtonAddProduct_Click;
             // 
             // buttonCancel
             // 
