@@ -49,8 +49,7 @@ namespace DataGridViewProject.Services
             ];
         }
 
-        /// <inheritdoc/>
-        public async Task<IEnumerable<ProductModel>> GetAllProducts() => await Task.FromResult<IEnumerable<ProductModel>>(products);
+        async Task<IEnumerable<ProductModel>> IProductService.GetAllProducts() => await Task.FromResult<IEnumerable<ProductModel>>(products);
 
         async Task IProductService.AddProduct(ProductModel product)
         {
@@ -103,7 +102,7 @@ namespace DataGridViewProject.Services
 
         async Task<ProductStatistics> IProductService.GetStatistics()
         {
-            var products = await GetAllProducts();
+            var products = await ((IProductService)this).GetAllProducts();
             var statistics = new ProductStatistics
             {
                 ProductCount = products.Count(),
