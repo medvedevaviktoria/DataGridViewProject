@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Authors>medvedevaviktoria</Authors>
+		<Product>medvedevaviktoria.$(AssemblyName)</Product>
+		<Description>DataGridViewProject.Services Медведева Виктория ИП 22-3</Description>
+		<Version>1.0.3</Version>
+		<PackageTags>Storage; InMemoryStorage; Service</PackageTags>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Entities\DataGridViewProject.Entities.csproj" />
+		<ProjectReference Include="..\Services.Contracts\DataGridViewProject.Services.Contracts.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+</Project>
