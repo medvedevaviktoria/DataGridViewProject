@@ -1,9 +1,8 @@
-﻿using DataGridViewProject.Classes;
+﻿using DataGridViewProject.Constants;
 using System.ComponentModel.DataAnnotations;
 
-namespace DataGridViewProject.Models
+namespace DataGridViewProject.Entities.Models
 {
-
     /// <summary>
     /// Модель продукта
     /// </summary>
