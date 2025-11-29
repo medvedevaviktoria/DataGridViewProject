@@ -12,19 +12,19 @@ namespace DataGridViewProject.Manager
     {
         private IProductService Storage { get; } = storage;
 
-        public Task<IEnumerable<ProductModel>> GetAllProducts() => Storage.GetAllProducts();
+        Task<IEnumerable<ProductModel>> IProductManager.GetAllProducts() => Storage.GetAllProducts();
 
-        public Task AddProduct(ProductModel product) => Storage.AddProduct(product);
+        Task IProductManager.AddProduct(ProductModel product) => Storage.AddProduct(product);
 
-        public Task UpdateProduct(ProductModel product) => Storage.UpdateProduct(product);
+        Task IProductManager.UpdateProduct(ProductModel product) => Storage.UpdateProduct(product);
 
-        public Task DeleteProduct(Guid id) => Storage.DeleteProduct(id);
+        Task IProductManager.DeleteProduct(Guid id) => Storage.DeleteProduct(id);
 
-        public Task<ProductModel?> GetProductById(Guid id) => Storage.GetProductById(id);
+        Task<ProductModel?> IProductManager.GetProductById(Guid id) => Storage.GetProductById(id);
 
-        public Task<decimal> GetProductTotalPriceWithoutTax(Guid id) => Storage.GetProductTotalPriceWithoutTax(id);
+        Task<decimal> IProductManager.GetProductTotalPriceWithoutTax(Guid id) => Storage.GetProductTotalPriceWithoutTax(id);
 
-        public async Task<ProductStatistics> GetStatistics()
+        async Task<ProductStatistics> IProductManager.GetStatistics()
         {
             var products = await (Storage).GetAllProducts();
             var statistics = new ProductStatistics
