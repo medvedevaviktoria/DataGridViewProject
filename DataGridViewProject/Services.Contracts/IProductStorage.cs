@@ -5,7 +5,7 @@ namespace DataGridViewProject.Services.Contracts
     /// <summary>
     /// Интерфейс сервиса для управления информации о товарах
     /// </summary>
-    public interface IProductService
+    public interface IProductStorage
     {
         /// <summary>
         /// Получить все товары

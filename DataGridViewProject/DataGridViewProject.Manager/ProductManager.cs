@@ -8,9 +8,9 @@ namespace DataGridViewProject.Manager
     /// <summary>
     /// Класс управления хранилищем
     /// </summary>
-    public class ProductManager(IProductService storage) : IProductManager
+    public class ProductManager(IProductStorage storage) : IProductManager
     {
-        private IProductService Storage { get; } = storage;
+        private IProductStorage Storage { get; } = storage;
 
         Task<IEnumerable<ProductModel>> IProductManager.GetAllProducts() => Storage.GetAllProducts();
 
