@@ -1,0 +1,39 @@
+﻿using DataGridViewProject.Constants;
+using DataGridViewProject.Entities.Models;
+using DataGridViewProject.Manager.Contracts;
+using DataGridViewProject.Services.Contracts;
+
+namespace DataGridViewProject.Manager
+{
+    /// <summary>
+    /// Класс управления хранилищем
+    /// </summary>
+    public class ProductManager(IProductService storage) : IProductManager
+    {
+        private IProductService Storage { get; } = storage;
+
+        public Task<IEnumerable<ProductModel>> GetAllProducts() => Storage.GetAllProducts();
+
+        public Task AddProduct(ProductModel product) => Storage.AddProduct(product);
+
+        public Task UpdateProduct(ProductModel product) => Storage.UpdateProduct(product);
+
+        public Task DeleteProduct(Guid id) => Storage.DeleteProduct(id);
+
+        public Task<ProductModel?> GetProductById(Guid id) => Storage.GetProductById(id);
+
+        public Task<decimal> GetProductTotalPriceWithoutTax(Guid id) => Storage.GetProductTotalPriceWithoutTax(id);
+
+        public async Task<ProductStatistics> GetStatistics()
+        {
+            var products = await (Storage).GetAllProducts();
+            var statistics = new ProductStatistics
+            {
+                ProductCount = products.Count(),
+                TotalWithoutTax = products.Sum(p => p.PriceWithoutTax * p.Quantity),
+                TotalWithTax = products.Sum(p => p.PriceWithoutTax * AppConstants.TaxRate * p.Quantity)
+            };
+            return statistics;
+        }
+    }
+}

@@ -1,5 +1,4 @@
-﻿using DataGridViewProject.Constants;
-using DataGridViewProject.Entities.Models;
+﻿using DataGridViewProject.Entities.Models;
 using DataGridViewProject.Services.Contracts;
 
 namespace DataGridViewProject.Services
@@ -98,18 +97,6 @@ namespace DataGridViewProject.Services
             }
             var totalPrice = product.PriceWithoutTax * product.Quantity;
             return await Task.FromResult(totalPrice);
-        }
-
-        async Task<ProductStatistics> IProductService.GetStatistics()
-        {
-            var products = await ((IProductService)this).GetAllProducts();
-            var statistics = new ProductStatistics
-            {
-                ProductCount = products.Count(),
-                TotalWithoutTax = products.Sum(p => p.PriceWithoutTax * p.Quantity),
-                TotalWithTax = products.Sum(p => p.PriceWithoutTax * AppConstants.TaxRate * p.Quantity)
-            };
-            return statistics;
         }
     }
 }

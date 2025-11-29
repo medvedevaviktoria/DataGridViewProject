@@ -1,11 +1,11 @@
 ﻿using DataGridViewProject.Entities.Models;
 
-namespace DataGridViewProject.Services.Contracts
+namespace DataGridViewProject.Manager.Contracts
 {
     /// <summary>
     /// Интерфейс сервиса для управления информации о товарах
     /// </summary>
-    public interface IProductService
+    public interface IProductManager
     {
         /// <summary>
         /// Получить все товары
@@ -37,5 +37,10 @@ namespace DataGridViewProject.Services.Contracts
         /// </summary>
         public Task<decimal> GetProductTotalPriceWithoutTax(Guid id);
 
+        /// <summary>
+        /// Получить статистику по продуктам на складе
+        /// </summary>
+        /// <returns></returns>
+        public Task<ProductStatistics> GetStatistics();
     }
 }

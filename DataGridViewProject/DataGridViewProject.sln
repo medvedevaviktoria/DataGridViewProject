@@ -13,6 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Constants", "Constants\DataGridViewProject.Constants.csproj", "{1ECAB22E-7090-40AC-B620-2CAB8F795E86}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BL", "BL", "{36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{8F881524-1E25-413C-A4C6-E8088B092DE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Manager", "DataGridViewProject.Manager\DataGridViewProject.Manager.csproj", "{197A2DB3-6D36-436F-B58E-2A4A65469B2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Manager.Contracts", "DataGridViewProject.Manager.Contracts\DataGridViewProject.Manager.Contracts.csproj", "{4B889449-0ACE-4EE4-A47B-E9E92F2574B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +47,24 @@ Global
 		{1ECAB22E-7090-40AC-B620-2CAB8F795E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ECAB22E-7090-40AC-B620-2CAB8F795E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ECAB22E-7090-40AC-B620-2CAB8F795E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{197A2DB3-6D36-436F-B58E-2A4A65469B2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{197A2DB3-6D36-436F-B58E-2A4A65469B2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{197A2DB3-6D36-436F-B58E-2A4A65469B2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{197A2DB3-6D36-436F-B58E-2A4A65469B2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B889449-0ACE-4EE4-A47B-E9E92F2574B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B889449-0ACE-4EE4-A47B-E9E92F2574B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B889449-0ACE-4EE4-A47B-E9E92F2574B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B889449-0ACE-4EE4-A47B-E9E92F2574B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2CAE2DDF-29FC-4580-9914-E844267D8930} = {8F881524-1E25-413C-A4C6-E8088B092DE0}
+		{D9927F19-B052-41AA-B39D-0B11FC2247E1} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{2DF88F91-158C-44ED-A0CD-C0CA1F4D87C6} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{197A2DB3-6D36-436F-B58E-2A4A65469B2C} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{4B889449-0ACE-4EE4-A47B-E9E92F2574B7} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {179D6645-DC0F-451D-8CBF-5341065B9069}

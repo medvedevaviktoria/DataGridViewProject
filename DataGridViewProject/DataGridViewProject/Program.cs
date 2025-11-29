@@ -1,6 +1,6 @@
-﻿using DataGridViewProject.Services.Contracts;
+﻿using DataGridViewProject.Forms;
+using DataGridViewProject.Manager;
 using DataGridViewProject.Services;
-using DataGridViewProject.Forms;
 
 namespace DataGridViewProject.App
 {
@@ -12,9 +12,10 @@ namespace DataGridViewProject.App
         [STAThread]
         static void Main()
         {
+            var products = new InMemoryStorage();
+            var productManager = new ProductManager(products);
             ApplicationConfiguration.Initialize();
-            IProductService productService = new InMemoryStorage();
-            Application.Run(new MainForm(productService));
+            Application.Run(new MainForm(productManager));
         }
     }
 }
