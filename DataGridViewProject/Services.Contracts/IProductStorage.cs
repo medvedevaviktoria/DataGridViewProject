@@ -1,6 +1,6 @@
 ﻿using DataGridViewProject.Entities.Models;
 
-namespace DataGridViewProject.Services.Contracts
+namespace DataGridViewProject.MemoryStorage.Contracts
 {
     /// <summary>
     /// Интерфейс сервиса для управления информации о товарах

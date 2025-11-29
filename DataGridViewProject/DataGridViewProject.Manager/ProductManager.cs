@@ -1,7 +1,7 @@
 ﻿using DataGridViewProject.Constants;
 using DataGridViewProject.Entities.Models;
 using DataGridViewProject.Manager.Contracts;
-using DataGridViewProject.Services.Contracts;
+using DataGridViewProject.MemoryStorage.Contracts;
 
 namespace DataGridViewProject.Manager
 {
