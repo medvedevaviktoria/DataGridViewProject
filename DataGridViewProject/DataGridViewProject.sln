@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.App", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Entities", "Entities\DataGridViewProject.Entities.csproj", "{2CAE2DDF-29FC-4580-9914-E844267D8930}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.MemoryStorage", "Services\DataGridViewProject.MemoryStorage.csproj", "{D9927F19-B052-41AA-B39D-0B11FC2247E1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.MemoryStorage.Contracts", "Services.Contracts\DataGridViewProject.MemoryStorage.Contracts.csproj", "{2DF88F91-158C-44ED-A0CD-C0CA1F4D87C6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Constants", "Constants\DataGridViewProject.Constants.csproj", "{1ECAB22E-7090-40AC-B620-2CAB8F795E86}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BL", "BL", "{36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}"
@@ -22,6 +18,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Manager.Contracts", "DataGridViewProject.Manager.Contracts\DataGridViewProject.Manager.Contracts.csproj", "{4B889449-0ACE-4EE4-A47B-E9E92F2574B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.Manager.Tests", "DataGridViewProject.Manager.Tests\DataGridViewProject.Manager.Tests.csproj", "{AABC1C97-3653-489A-A6FE-FE0E781E0BF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.MemoryStorage", "Services\DataGridViewProject.MemoryStorage.csproj", "{148D4995-A746-F74C-E91C-8E5F30412139}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.MemoryStorage.Contracts", "Services.Contracts\DataGridViewProject.MemoryStorage.Contracts.csproj", "{C81437F1-3C33-C55A-530C-DDC15027CC4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +37,6 @@ Global
 		{2CAE2DDF-29FC-4580-9914-E844267D8930}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CAE2DDF-29FC-4580-9914-E844267D8930}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CAE2DDF-29FC-4580-9914-E844267D8930}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9927F19-B052-41AA-B39D-0B11FC2247E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9927F19-B052-41AA-B39D-0B11FC2247E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9927F19-B052-41AA-B39D-0B11FC2247E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9927F19-B052-41AA-B39D-0B11FC2247E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2DF88F91-158C-44ED-A0CD-C0CA1F4D87C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DF88F91-158C-44ED-A0CD-C0CA1F4D87C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DF88F91-158C-44ED-A0CD-C0CA1F4D87C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DF88F91-158C-44ED-A0CD-C0CA1F4D87C6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1ECAB22E-7090-40AC-B620-2CAB8F795E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1ECAB22E-7090-40AC-B620-2CAB8F795E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ECAB22E-7090-40AC-B620-2CAB8F795E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,17 +53,25 @@ Global
 		{AABC1C97-3653-489A-A6FE-FE0E781E0BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AABC1C97-3653-489A-A6FE-FE0E781E0BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AABC1C97-3653-489A-A6FE-FE0E781E0BF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{148D4995-A746-F74C-E91C-8E5F30412139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{148D4995-A746-F74C-E91C-8E5F30412139}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{148D4995-A746-F74C-E91C-8E5F30412139}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{148D4995-A746-F74C-E91C-8E5F30412139}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C81437F1-3C33-C55A-530C-DDC15027CC4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C81437F1-3C33-C55A-530C-DDC15027CC4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C81437F1-3C33-C55A-530C-DDC15027CC4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C81437F1-3C33-C55A-530C-DDC15027CC4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2CAE2DDF-29FC-4580-9914-E844267D8930} = {8F881524-1E25-413C-A4C6-E8088B092DE0}
-		{D9927F19-B052-41AA-B39D-0B11FC2247E1} = {8F881524-1E25-413C-A4C6-E8088B092DE0}
-		{2DF88F91-158C-44ED-A0CD-C0CA1F4D87C6} = {8F881524-1E25-413C-A4C6-E8088B092DE0}
 		{197A2DB3-6D36-436F-B58E-2A4A65469B2C} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{4B889449-0ACE-4EE4-A47B-E9E92F2574B7} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{AABC1C97-3653-489A-A6FE-FE0E781E0BF9} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{148D4995-A746-F74C-E91C-8E5F30412139} = {8F881524-1E25-413C-A4C6-E8088B092DE0}
+		{C81437F1-3C33-C55A-530C-DDC15027CC4D} = {8F881524-1E25-413C-A4C6-E8088B092DE0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {179D6645-DC0F-451D-8CBF-5341065B9069}
