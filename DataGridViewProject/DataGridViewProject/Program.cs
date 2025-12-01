@@ -24,8 +24,6 @@ namespace DataGridViewProject.App
                     apiKey: "ilGJHIZ2Pb05nGLsAXkJ")
                 .CreateLogger();
 
-            Log.Debug("Тестовый лог в Debug окне");
-
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddSerilog(log);
