@@ -43,10 +43,7 @@ namespace DataGridViewProject.Manager.Tests
 
             var result = await productManager.GetAllProducts();
 
-            result.Should().NotBeEmpty()
-                .And.HaveCount(2)
-                .And.ContainSingle(x => x.Id == product1.Id)
-                .And.ContainSingle(x => x.Id == product2.Id);
+            result.Should().BeEquivalentTo([product1, product2]);
             storageMock.Verify(x => x.GetAllProducts(), Times.Once);
             storageMock.VerifyNoOtherCalls();
         }

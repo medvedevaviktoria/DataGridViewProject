@@ -2,6 +2,7 @@
 using DataGridViewProject.Entities.Models;
 using DataGridViewProject.Manager.Contracts;
 using DataGridViewProject.MemoryStorage.Contracts;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using System.Diagnostics;
 
@@ -13,13 +14,15 @@ namespace DataGridViewProject.Manager
     public class ProductManager : IProductManager
     {
         private readonly IProductStorage storage;
+        private readonly ILogger<ProductManager> logger;
 
         /// <summary>
         /// Инициализирует экземпляр <see cref="<ProductManager>"/>
         /// </summary>
-        public ProductManager(IProductStorage storage)
+        public ProductManager(IProductStorage storage, ILoggerFactory loggerFactory)
         {
             this.storage = storage;
+            logger = loggerFactory.CreateLogger<ProductManager>();
         }
 
         async Task<IEnumerable<ProductModel>> IProductManager.GetAllProducts()
@@ -33,8 +36,7 @@ namespace DataGridViewProject.Manager
             finally
             {
                 sw.Stop();
-                var ms = sw.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
-                Log.Debug("IProductManager.GetAllProducts выполнен за {ms:F6} мс", ms);
+                logger.LogInformation("GetAllProducts completed in {ElapsedMilliseconds} ms", sw.ElapsedMilliseconds);
             }
         }
 
@@ -48,8 +50,7 @@ namespace DataGridViewProject.Manager
             finally
             {
                 sw.Stop();
-                var ms = sw.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
-                Log.Debug("IProductManager.AddProduct выполнен за {ms:F6} мс", ms);
+                logger.LogInformation("AddProduct completed in {ElapsedMilliseconds} ms", sw.ElapsedMilliseconds);
             }
         }
 
@@ -63,8 +64,7 @@ namespace DataGridViewProject.Manager
             finally
             {
                 sw.Stop();
-                var ms = sw.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
-                Log.Debug("IProductManager.UpdateProduct выполнен за {ms:F6} мс", ms);
+                logger.LogInformation("UpdateProduct completed in {ElapsedMilliseconds} ms", sw.ElapsedMilliseconds);
             }
         }
 
@@ -78,8 +78,7 @@ namespace DataGridViewProject.Manager
             finally
             {
                 sw.Stop();
-                var ms = sw.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
-                Log.Debug("IProductManager.DeleteProduct выполнен за {ms:F6} мс", ms);
+                logger.LogInformation("DeleteProduct completed in {ElapsedMilliseconds} ms", sw.ElapsedMilliseconds);
             }
         }
 
@@ -94,8 +93,7 @@ namespace DataGridViewProject.Manager
             finally
             {
                 sw.Stop();
-                var ms = sw.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
-                Log.Debug("IProductManager.GetProductById выполнен за {ms:F6} мс", ms);
+                logger.LogInformation("GetProductById completed in {ElapsedMilliseconds} ms", sw.ElapsedMilliseconds);
             }
         }
 
@@ -110,8 +108,7 @@ namespace DataGridViewProject.Manager
             finally
             {
                 sw.Stop();
-                var ms = sw.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
-                Log.Debug("IProductManager.GetProductTotalPriceWithoutTax выполнен за {ms:F6} мс", ms);
+                logger.LogInformation("GetProductTotalPriceWithoutTax completed in {ElapsedMilliseconds} ms", sw.ElapsedMilliseconds);
             }
         }
 
@@ -132,8 +129,7 @@ namespace DataGridViewProject.Manager
             finally
             {
                 sw.Stop();
-                var ms = sw.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
-                Log.Debug("IProductManager.GetStatistics выполнен за {ms:F6} мс", ms);
+                logger.LogInformation("GetStatistics completed in {ElapsedMilliseconds} ms", sw.ElapsedMilliseconds);
             }
 
         }
