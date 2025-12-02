@@ -2,6 +2,7 @@
 using DataGridViewProject.Constants;
 using DataGridViewProject.Entities.Models;
 using DataGridViewProject.Manager.Contracts;
+using Microsoft.Extensions.Logging;
 using DataGridViewProject.MemoryStorage.Contracts;
 using FluentAssertions;
 using Moq;
@@ -17,13 +18,21 @@ namespace DataGridViewProject.Manager.Tests
         private readonly IProductManager productManager;
         private readonly Mock<IProductStorage> storageMock;
 
+
         /// <summary>
         /// Инициализирует экземпляр <see cref="ProductManagerTests"/>
         /// </summary>
         public ProductManagerTests()
         {
             storageMock = new Mock<IProductStorage>();
-            productManager = new ProductManager(storageMock.Object);
+
+            var mockLogger = new Mock<ILogger>(); 
+            var mockLoggerFactory = new Mock<ILoggerFactory>();
+            mockLoggerFactory
+                .Setup(f => f.CreateLogger(It.IsAny<string>()))
+                .Returns(mockLogger.Object);
+
+            productManager = new ProductManager(storageMock.Object, mockLoggerFactory.Object);
         }
 
         /// <summary>

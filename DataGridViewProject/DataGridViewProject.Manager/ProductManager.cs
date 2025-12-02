@@ -3,7 +3,6 @@ using DataGridViewProject.Entities.Models;
 using DataGridViewProject.Manager.Contracts;
 using DataGridViewProject.MemoryStorage.Contracts;
 using Microsoft.Extensions.Logging;
-using Serilog;
 using System.Diagnostics;
 
 namespace DataGridViewProject.Manager
@@ -14,7 +13,7 @@ namespace DataGridViewProject.Manager
     public class ProductManager : IProductManager
     {
         private readonly IProductStorage storage;
-        private readonly ILogger<ProductManager> logger;
+        private readonly ILogger logger;
 
         /// <summary>
         /// Инициализирует экземпляр <see cref="<ProductManager>"/>
@@ -22,7 +21,7 @@ namespace DataGridViewProject.Manager
         public ProductManager(IProductStorage storage, ILoggerFactory loggerFactory)
         {
             this.storage = storage;
-            logger = loggerFactory.CreateLogger<ProductManager>();
+            logger = loggerFactory.CreateLogger(nameof(ProductManager));
         }
 
         async Task<IEnumerable<ProductModel>> IProductManager.GetAllProducts()
