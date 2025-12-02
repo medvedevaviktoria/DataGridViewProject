@@ -1,13 +1,12 @@
-﻿using DataGridViewProject.Constants;
-using DataGridViewProject.Entities.Models;
-using DataGridViewProject.Services.Contracts;
+﻿using DataGridViewProject.Entities.Models;
+using DataGridViewProject.MemoryStorage.Contracts;
 
-namespace DataGridViewProject.Services
+namespace DataGridViewProject.MemoryStorage
 {
     /// <summary>
     /// Сервис для доступа к товарам, хранящимся в памяти
     /// </summary>
-    public class InMemoryStorage : IProductService
+    public class InMemoryStorage : IProductStorage
     {
         private readonly List<ProductModel> products;
 
@@ -49,15 +48,15 @@ namespace DataGridViewProject.Services
             ];
         }
 
-        async Task<IEnumerable<ProductModel>> IProductService.GetAllProducts() => await Task.FromResult<IEnumerable<ProductModel>>(products);
+        async Task<IEnumerable<ProductModel>> IProductStorage.GetAllProducts() => await Task.FromResult<IEnumerable<ProductModel>>(products);
 
-        async Task IProductService.AddProduct(ProductModel product)
+        async Task IProductStorage.AddProduct(ProductModel product)
         {
             products.Add(product);
             await Task.CompletedTask;
         }
 
-        async Task IProductService.UpdateProduct(ProductModel product)
+        async Task IProductStorage.UpdateProduct(ProductModel product)
         {
             var existingProduct = products.FirstOrDefault(p => p.Id == product.Id);
             if (existingProduct == null)
@@ -75,7 +74,7 @@ namespace DataGridViewProject.Services
             await Task.CompletedTask;
         }
 
-        async Task IProductService.DeleteProduct(Guid id)
+        async Task IProductStorage.DeleteProduct(Guid id)
         {
             var existingProduct = products.FirstOrDefault(p => p.Id == id);
             if (existingProduct == null)
@@ -87,9 +86,9 @@ namespace DataGridViewProject.Services
             await Task.CompletedTask;
         }
 
-        async Task<ProductModel?> IProductService.GetProductById(Guid id) => await Task.FromResult(products.FirstOrDefault(p => p.Id == id));
+        async Task<ProductModel?> IProductStorage.GetProductById(Guid id) => await Task.FromResult(products.FirstOrDefault(p => p.Id == id));
 
-        async Task<decimal> IProductService.GetProductTotalPriceWithoutTax(Guid id)
+        async Task<decimal> IProductStorage.GetProductTotalPriceWithoutTax(Guid id)
         {
             var product = products.FirstOrDefault(p => p.Id == id);
             if (product == null)
@@ -98,18 +97,6 @@ namespace DataGridViewProject.Services
             }
             var totalPrice = product.PriceWithoutTax * product.Quantity;
             return await Task.FromResult(totalPrice);
-        }
-
-        async Task<ProductStatistics> IProductService.GetStatistics()
-        {
-            var products = await ((IProductService)this).GetAllProducts();
-            var statistics = new ProductStatistics
-            {
-                ProductCount = products.Count(),
-                TotalWithoutTax = products.Sum(p => p.PriceWithoutTax * p.Quantity),
-                TotalWithTax = products.Sum(p => p.PriceWithoutTax * AppConstants.TaxRate * p.Quantity)
-            };
-            return statistics;
         }
     }
 }

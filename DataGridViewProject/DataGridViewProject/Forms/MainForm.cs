@@ -1,5 +1,5 @@
 ﻿using DataGridViewProject.Entities.Models;
-using DataGridViewProject.Services.Contracts;
+using DataGridViewProject.Manager.Contracts;
 
 namespace DataGridViewProject.Forms
 {
@@ -8,16 +8,16 @@ namespace DataGridViewProject.Forms
     /// </summary>
     public partial class MainForm : Form
     {
-        private readonly IProductService productService;
+        private readonly IProductManager productManager;
         private readonly BindingSource bindingSource = [];
 
         /// <summary>
         /// Инициализирует экземпляр <see cref="<MainForm>"/>
         /// </summary>
-        public MainForm(IProductService productService)
+        public MainForm(IProductManager productManager)
         {
             InitializeComponent();
-            this.productService = productService;
+            this.productManager = productManager;
             dataGridView1.AutoGenerateColumns = false;
         }
 
@@ -28,7 +28,7 @@ namespace DataGridViewProject.Forms
 
         private async Task LoadData()
         {
-            var products = await productService.GetAllProducts();
+            var products = await productManager.GetAllProducts();
             bindingSource.DataSource = products.ToList();
             dataGridView1.DataSource = bindingSource;
             await SetStatistic();
@@ -36,7 +36,7 @@ namespace DataGridViewProject.Forms
 
         private async Task OnUpdate()
         {
-            var products = await productService.GetAllProducts();
+            var products = await productManager.GetAllProducts();
             bindingSource.DataSource = products.ToList();
             bindingSource.ResetBindings(false);
             await SetStatistic();
@@ -44,7 +44,7 @@ namespace DataGridViewProject.Forms
 
         private async Task SetStatistic()
         {
-            var statistics = await productService.GetStatistics();
+            var statistics = await productManager.GetStatistics();
             LabelQuantity.Text = $"Количество товаров: {statistics.ProductCount}";
             LabelPriceWithTax.Text = $"Общая сумма товаров на складе(С НДС): {statistics.TotalWithTax:F2} ₽";
             LabelPriceWithoutTax.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {statistics.TotalWithoutTax:F2} ₽";
@@ -73,7 +73,7 @@ namespace DataGridViewProject.Forms
 
             if (col.Name == "TotalPriceWithoutTax")
             {
-                var totalPriceWithoutTax = await productService.GetProductTotalPriceWithoutTax(product.Id);
+                var totalPriceWithoutTax = await productManager.GetProductTotalPriceWithoutTax(product.Id);
                 e.Value = totalPriceWithoutTax;
             }
         }
@@ -83,7 +83,7 @@ namespace DataGridViewProject.Forms
             var addForm = new ProductForm();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                await productService.AddProduct(addForm.CurrentProduct);
+                await productManager.AddProduct(addForm.CurrentProduct);
                 await OnUpdate();
             }
         }
@@ -98,7 +98,7 @@ namespace DataGridViewProject.Forms
             var product = (ProductModel)dataGridView1.SelectedRows[0].DataBoundItem;
             if (MessageBox.Show($"Удалить '{product.ProductName}'?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                await productService.DeleteProduct(product.Id);
+                await productManager.DeleteProduct(product.Id);
                 await OnUpdate();
 
             }
@@ -116,7 +116,7 @@ namespace DataGridViewProject.Forms
             var editForm = new ProductForm(product);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                await productService.UpdateProduct(editForm.CurrentProduct);
+                await productManager.UpdateProduct(editForm.CurrentProduct);
                 await OnUpdate();
             }
         }
