@@ -21,7 +21,7 @@ namespace DataGridViewProject.Manager
         public ProductManager(IProductStorage storage, ILoggerFactory loggerFactory)
         {
             this.storage = storage;
-            logger = loggerFactory.CreateLogger(nameof(ProductManager));
+            logger = loggerFactory.CreateLogger<ProductManager>();
         }
 
         async Task<IEnumerable<ProductModel>> IProductManager.GetAllProducts()
