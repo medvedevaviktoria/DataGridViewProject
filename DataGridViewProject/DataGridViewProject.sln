@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.MemoryS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.MemoryStorage.Contracts", "Services.Contracts\DataGridViewProject.MemoryStorage.Contracts.csproj", "{C81437F1-3C33-C55A-530C-DDC15027CC4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject.DataBaseStorage", "DataGridViewProject.DataBaseStorage\DataGridViewProject.DataBaseStorage.csproj", "{04E4CB1A-8E94-4CF2-935B-F9C1BA794146}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{C81437F1-3C33-C55A-530C-DDC15027CC4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C81437F1-3C33-C55A-530C-DDC15027CC4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C81437F1-3C33-C55A-530C-DDC15027CC4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04E4CB1A-8E94-4CF2-935B-F9C1BA794146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04E4CB1A-8E94-4CF2-935B-F9C1BA794146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04E4CB1A-8E94-4CF2-935B-F9C1BA794146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04E4CB1A-8E94-4CF2-935B-F9C1BA794146}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{AABC1C97-3653-489A-A6FE-FE0E781E0BF9} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{148D4995-A746-F74C-E91C-8E5F30412139} = {8F881524-1E25-413C-A4C6-E8088B092DE0}
 		{C81437F1-3C33-C55A-530C-DDC15027CC4D} = {8F881524-1E25-413C-A4C6-E8088B092DE0}
+		{04E4CB1A-8E94-4CF2-935B-F9C1BA794146} = {8F881524-1E25-413C-A4C6-E8088B092DE0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {179D6645-DC0F-451D-8CBF-5341065B9069}
