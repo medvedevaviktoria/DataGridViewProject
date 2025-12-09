@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Entities\DataGridViewProject.Entities.csproj" />
+    <ProjectReference Include="..\Services.Contracts\DataGridViewProject.MemoryStorage.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
