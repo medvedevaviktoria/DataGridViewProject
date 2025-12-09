@@ -1,4 +1,4 @@
-﻿namespace DataGridViewProject.Services.Contracts
+﻿namespace DataGridViewProject.Manager.Contracts
 {
     /// <summary>
     /// Класс для хранения статистики продуктов
