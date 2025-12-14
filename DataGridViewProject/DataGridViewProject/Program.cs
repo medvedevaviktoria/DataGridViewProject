@@ -1,6 +1,6 @@
-﻿using DataGridViewProject.Forms;
+﻿using DataGridViewProject.DataBaseStorage;
+using DataGridViewProject.Forms;
 using DataGridViewProject.Manager;
-using DataGridViewProject.MemoryStorage;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
@@ -29,7 +29,7 @@ namespace DataGridViewProject.App
                 builder.AddSerilog(log);
             });
 
-            var storage = new InMemoryStorage();
+            var storage = new DataGridViewProjectStorage();
             var productManager = new ProductManager(storage, loggerFactory);
 
 
