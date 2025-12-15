@@ -1,4 +1,5 @@
-﻿using DataGridViewProject.Manager;
+﻿using DataGridViewProject.Entities.Models;
+using DataGridViewProject.Manager;
 using DataGridViewProject.Manager.Contracts;
 using DataGridViewProject.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,30 @@ namespace DataGridViewProject.Web.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             await productManager.DeleteProduct(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var product = await productManager.GetProductById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ProductModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await productManager.UpdateProduct(model);
             return RedirectToAction(nameof(Index));
         }
 
