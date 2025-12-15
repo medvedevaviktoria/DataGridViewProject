@@ -3,6 +3,7 @@ using DataGridViewProject.Manager.Contracts;
 using DataGridViewProject.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Threading;
 
 namespace DataGridViewProject.Web.Controllers
 {
@@ -21,10 +22,10 @@ namespace DataGridViewProject.Web.Controllers
         /// <summary>
         /// Отображает главную страницу со списком товаров и статистикой по складу
         /// </summary>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var products = await productManager.GetAllProducts();
-            var statistics = await productManager.GetStatistics();
+            var products = await productManager.GetAllProducts(cancellationToken);
+            var statistics = await productManager.GetStatistics(cancellationToken);
 
             var model = new IndexViewModel
             {
@@ -39,9 +40,9 @@ namespace DataGridViewProject.Web.Controllers
         /// Отображает страницу подтверждения удаления выбранного товара
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
-            var product = await productManager.GetProductById(id);
+            var product = await productManager.GetProductById(id, cancellationToken);
             if (product == null)
             {
                 return NotFound();
@@ -54,9 +55,9 @@ namespace DataGridViewProject.Web.Controllers
         /// Выполняет удаление товара после подтверждения пользователем
         /// </summary>
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, CancellationToken cancellationToken)
         {
-            await productManager.DeleteProduct(id);
+            await productManager.DeleteProduct(id, cancellationToken);
             return RedirectToAction(nameof(Index));
         }
 
@@ -64,9 +65,9 @@ namespace DataGridViewProject.Web.Controllers
         /// Отображает форму редактирования выбранного товара
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id, CancellationToken cancellationToken)
         {
-            var product = await productManager.GetProductById(id);
+            var product = await productManager.GetProductById(id, cancellationToken);
             if (product == null)
             {
                 return NotFound();
@@ -79,14 +80,14 @@ namespace DataGridViewProject.Web.Controllers
         /// Принимает изменения товара из формы и сохраняет их
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Edit(ProductModel model)
+        public async Task<IActionResult> Edit(ProductModel model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            await productManager.UpdateProduct(model);
+            await productManager.UpdateProduct(model, cancellationToken);
             return RedirectToAction(nameof(Index));
         }
 
@@ -104,14 +105,14 @@ namespace DataGridViewProject.Web.Controllers
         /// Принимает данные нового товара из формы и добавляет его в хранилище
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Create(ProductModel model)
+        public async Task<IActionResult> Create(ProductModel model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            await productManager.AddProduct(model);
+            await productManager.AddProduct(model, cancellationToken);
             return RedirectToAction(nameof(Index));
         }
 
