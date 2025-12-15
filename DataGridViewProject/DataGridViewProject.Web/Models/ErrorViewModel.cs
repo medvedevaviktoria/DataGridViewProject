@@ -1,4 +1,4 @@
-namespace DataGridViewProject.Web.Models
+﻿namespace DataGridViewProject.Web.Models
 {
     public class ErrorViewModel
     {

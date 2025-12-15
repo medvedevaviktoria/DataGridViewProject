@@ -1,7 +1,14 @@
+﻿using DataGridViewProject.DataBaseStorage;
+using DataGridViewProject.Manager;
+using DataGridViewProject.Manager.Contracts;
+using DataGridViewProject.MemoryStorage.Contracts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IProductStorage, DataGridViewProjectStorage>();
+builder.Services.AddScoped<IProductManager, ProductManager>();
 
 var app = builder.Build();
 
