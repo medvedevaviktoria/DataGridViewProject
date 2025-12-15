@@ -3,6 +3,9 @@ using DataGridViewProject.Manager.Contracts;
 
 namespace DataGridViewProject.Web.Models
 {
+    /// <summary>
+    /// Модель продукта для главной страницы
+    /// </summary>
     public class IndexViewModel
     {
         /// <summary>
