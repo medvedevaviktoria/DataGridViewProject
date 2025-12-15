@@ -20,6 +20,7 @@
             <th>Количество</th>
             <th>Мин. количество</th>
             <th>Цена без НДС</th>
+            <th>Общая стоимость</th>
             <th></th>
         </tr>
     </thead>
@@ -33,6 +34,7 @@
                 <td>@product.Quantity</td>
                 <td>@product.MinQuantity</td>
                 <td>@product.PriceWithoutTax ₽</td>
+                <td>@(product.PriceWithoutTax* product.Quantity) ₽</td>
                 <td>
                     <div class="btn-group" role="group">
                         <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">Изменить</a>
