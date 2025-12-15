@@ -74,6 +74,25 @@ namespace DataGridViewProject.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var model = new ProductModel(); 
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ProductModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await productManager.AddProduct(model);
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult Privacy()
         {
             return View();
