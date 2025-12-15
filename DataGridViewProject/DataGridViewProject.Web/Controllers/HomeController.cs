@@ -1,21 +1,34 @@
-﻿using DataGridViewProject.Web.Models;
+﻿using DataGridViewProject.Manager;
+using DataGridViewProject.Manager.Contracts;
+using DataGridViewProject.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Threading;
 
 namespace DataGridViewProject.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductManager productManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductManager productManager)
         {
-            _logger = logger;
+            this.productManager = productManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var products = await productManager.GetAllProducts();
+            var statistics = await productManager.GetStatistics();
+
+            var model = new IndexViewModel
+            {
+                Products = products.ToList(),
+                Statistics = statistics
+            };
+
+            return View(model); 
+
         }
 
         public IActionResult Privacy()
