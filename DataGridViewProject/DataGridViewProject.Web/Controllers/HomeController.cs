@@ -28,7 +28,25 @@ namespace DataGridViewProject.Web.Controllers
             };
 
             return View(model); 
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var product = await productManager.GetProductById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            await productManager.DeleteProduct(id);
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
