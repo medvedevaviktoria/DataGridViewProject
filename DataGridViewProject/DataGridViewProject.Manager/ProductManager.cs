@@ -24,7 +24,7 @@ namespace DataGridViewProject.Manager
             logger = loggerFactory.CreateLogger<ProductManager>();
         }
 
-        async Task<IEnumerable<ProductModel>> IProductManager.GetAllProducts()
+        async Task<IEnumerable<ProductModel>> IProductManager.GetAllProducts(CancellationToken cancellationToken = default)
         {
             var sw = Stopwatch.StartNew();
             try
@@ -39,7 +39,7 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task IProductManager.AddProduct(ProductModel product)
+        async Task IProductManager.AddProduct(ProductModel product, CancellationToken cancellationToken = default)
         {
             var sw = Stopwatch.StartNew();
             try
@@ -53,7 +53,7 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task IProductManager.UpdateProduct(ProductModel product)
+        async Task IProductManager.UpdateProduct(ProductModel product, CancellationToken cancellationToken = default)
         {
             var sw = Stopwatch.StartNew();
             try
@@ -67,7 +67,7 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task IProductManager.DeleteProduct(Guid id)
+        async Task IProductManager.DeleteProduct(Guid id, CancellationToken cancellationToken = default)
         {
             var sw = Stopwatch.StartNew();
             try
@@ -81,7 +81,7 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task<ProductModel?> IProductManager.GetProductById(Guid id)
+        async Task<ProductModel?> IProductManager.GetProductById(Guid id, CancellationToken cancellationToken = default)
         {
             var sw = Stopwatch.StartNew();
             try
@@ -96,7 +96,7 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task<decimal> IProductManager.GetProductTotalPriceWithoutTax(Guid id)
+        async Task<decimal> IProductManager.GetProductTotalPriceWithoutTax(Guid id, CancellationToken cancellationToken = default)
         {
             var sw = Stopwatch.StartNew();
             try
@@ -111,7 +111,7 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task<ProductStatistics> IProductManager.GetStatistics()
+        async Task<ProductStatistics> IProductManager.GetStatistics(CancellationToken cancellationToken = default)
         {
             var sw = Stopwatch.StartNew();
             try
