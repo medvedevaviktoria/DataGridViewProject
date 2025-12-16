@@ -50,7 +50,7 @@ namespace DataGridViewProject.Manager.Tests
                     product2,
                 });
 
-            var result = await productManager.GetAllProducts();
+            var result = await productManager.GetAllProducts(cancellationToken);
 
             result.Should().BeEquivalentTo([product1, product2]);
             storageMock.Verify(x => x.GetAllProducts(cancellationToken), Times.Once);
@@ -65,7 +65,7 @@ namespace DataGridViewProject.Manager.Tests
         {
             var product1 = TestEntityProvider.Shared.Create<ProductModel>();
             
-            var act = () => productManager.AddProduct(product1);
+            var act = () => productManager.AddProduct(product1, cancellationToken);
 
             await act.Should().NotThrowAsync();
             storageMock.Verify(x => x.AddProduct(product1, cancellationToken), Times.Once);
@@ -80,7 +80,7 @@ namespace DataGridViewProject.Manager.Tests
         {
             var product1 = TestEntityProvider.Shared.Create<ProductModel>();
 
-            var act = () => productManager.UpdateProduct(product1);
+            var act = () => productManager.UpdateProduct(product1, cancellationToken);
 
             await act.Should().NotThrowAsync();
             storageMock.Verify(x => x.UpdateProduct(product1, cancellationToken), Times.Once);
@@ -95,7 +95,7 @@ namespace DataGridViewProject.Manager.Tests
         {
             var product1 = TestEntityProvider.Shared.Create<ProductModel>();
 
-            var act = () => productManager.DeleteProduct(product1.Id);
+            var act = () => productManager.DeleteProduct(product1.Id, cancellationToken);
 
             await act.Should().NotThrowAsync();
             storageMock.Verify(x => x.DeleteProduct(product1.Id, cancellationToken), Times.Once);
@@ -112,7 +112,7 @@ namespace DataGridViewProject.Manager.Tests
             storageMock.Setup(x => x.GetProductById(product1.Id, cancellationToken))
                 .ReturnsAsync(product1);
 
-            var result = await productManager.GetProductById(product1.Id);
+            var result = await productManager.GetProductById(product1.Id, cancellationToken);
 
             result.Should().NotBeNull();
             result.Id.Should().Be(product1.Id);
@@ -131,7 +131,7 @@ namespace DataGridViewProject.Manager.Tests
             storageMock.Setup(x => x.GetProductTotalPriceWithoutTax(product1.Id, cancellationToken))
                 .ReturnsAsync(expected);
 
-            var result = await productManager.GetProductTotalPriceWithoutTax(product1.Id);
+            var result = await productManager.GetProductTotalPriceWithoutTax(product1.Id, cancellationToken);
 
             result.Should().Be(expected);
             storageMock.Verify(x => x.GetProductTotalPriceWithoutTax(product1.Id, cancellationToken), Times.Once);
@@ -154,7 +154,7 @@ namespace DataGridViewProject.Manager.Tests
             storageMock.Setup(x => x.GetAllProducts(cancellationToken))
                 .ReturnsAsync(new[] { product1, product2 });
 
-            var result = await productManager.GetStatistics();
+            var result = await productManager.GetStatistics(cancellationToken);
 
             result.ProductCount.Should().Be(2);
             result.TotalWithoutTax.Should().Be(110m);

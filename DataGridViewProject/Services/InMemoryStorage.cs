@@ -48,15 +48,15 @@ namespace DataGridViewProject.MemoryStorage
             ];
         }
 
-        async Task<IEnumerable<ProductModel>> IProductStorage.GetAllProducts(CancellationToken cancellationToken = default) => await Task.FromResult<IEnumerable<ProductModel>>(products);
+        async Task<IEnumerable<ProductModel>> IProductStorage.GetAllProducts(CancellationToken cancellationToken) => await Task.FromResult<IEnumerable<ProductModel>>(products);
 
-        async Task IProductStorage.AddProduct(ProductModel product, CancellationToken cancellationToken = default)
+        async Task IProductStorage.AddProduct(ProductModel product, CancellationToken cancellationToken)
         {
             products.Add(product);
             await Task.CompletedTask;
         }
 
-        async Task IProductStorage.UpdateProduct(ProductModel product, CancellationToken cancellationToken = default)
+        async Task IProductStorage.UpdateProduct(ProductModel product, CancellationToken cancellationToken)
         {
             var existingProduct = products.FirstOrDefault(p => p.Id == product.Id);
             if (existingProduct == null)
@@ -74,7 +74,7 @@ namespace DataGridViewProject.MemoryStorage
             await Task.CompletedTask;
         }
 
-        async Task IProductStorage.DeleteProduct(Guid id, CancellationToken cancellationToken = default)
+        async Task IProductStorage.DeleteProduct(Guid id, CancellationToken cancellationToken)
         {
             var existingProduct = products.FirstOrDefault(p => p.Id == id);
             if (existingProduct == null)
@@ -86,9 +86,9 @@ namespace DataGridViewProject.MemoryStorage
             await Task.CompletedTask;
         }
 
-        async Task<ProductModel?> IProductStorage.GetProductById(Guid id, CancellationToken cancellationToken = default) => await Task.FromResult(products.FirstOrDefault(p => p.Id == id));
+        async Task<ProductModel?> IProductStorage.GetProductById(Guid id, CancellationToken cancellationToken) => await Task.FromResult(products.FirstOrDefault(p => p.Id == id));
 
-        async Task<decimal> IProductStorage.GetProductTotalPriceWithoutTax(Guid id, CancellationToken cancellationToken = default)
+        async Task<decimal> IProductStorage.GetProductTotalPriceWithoutTax(Guid id, CancellationToken cancellationToken)
         {
             var product = products.FirstOrDefault(p => p.Id == id);
             if (product == null)

@@ -9,7 +9,7 @@ namespace DataGridViewProject.DataBaseStorage
         /// <summary>
         /// Получить все товары.
         /// </summary>
-        public async Task<IEnumerable<ProductModel>> GetAllProducts(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<ProductModel>> GetAllProducts(CancellationToken cancellationToken )
         {
             using var database = new DataGridViewProjectContext();
             return await database.Products.AsNoTracking().ToListAsync();
@@ -18,7 +18,7 @@ namespace DataGridViewProject.DataBaseStorage
         /// <summary>
         /// Добавить новый товар
         /// </summary>
-        public async Task AddProduct(ProductModel product, CancellationToken cancellationToken = default)
+        public async Task AddProduct(ProductModel product, CancellationToken cancellationToken)
         {
             using var database = new DataGridViewProjectContext();
             database.Products.Add(product);
@@ -28,7 +28,7 @@ namespace DataGridViewProject.DataBaseStorage
         /// <summary>
         /// Обновить товар
         /// </summary>
-        public async Task UpdateProduct(ProductModel product, CancellationToken cancellationToken = default)
+        public async Task UpdateProduct(ProductModel product, CancellationToken cancellationToken)
         {
             using var database = new DataGridViewProjectContext();
             database.Products.Update(product);
@@ -38,7 +38,7 @@ namespace DataGridViewProject.DataBaseStorage
         /// <summary>
         /// Удалить товар по ID
         /// </summary>
-        public async Task DeleteProduct(Guid id, CancellationToken cancellationToken = default)
+        public async Task DeleteProduct(Guid id, CancellationToken cancellationToken)
         {
             using var database = new DataGridViewProjectContext();
             var product = await database.Products.FindAsync(id);
@@ -53,7 +53,7 @@ namespace DataGridViewProject.DataBaseStorage
         /// <summary>
         /// Найти товар по ID
         /// </summary>
-        public async Task<ProductModel?> GetProductById(Guid id, CancellationToken cancellationToken = default)
+        public async Task<ProductModel?> GetProductById(Guid id, CancellationToken cancellationToken)
         {
             using var database = new DataGridViewProjectContext();
             return await database.Products.FindAsync(id);
@@ -62,7 +62,7 @@ namespace DataGridViewProject.DataBaseStorage
         /// <summary>
         /// Получить общую стоимость товара БЕЗ НДС (Цена * Количество)
         /// </summary>
-        public async Task<decimal> GetProductTotalPriceWithoutTax(Guid id, CancellationToken cancellationToken = default)
+        public async Task<decimal> GetProductTotalPriceWithoutTax(Guid id, CancellationToken cancellationToken)
         {
             using var database = new DataGridViewProjectContext();
             var product = await database.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);

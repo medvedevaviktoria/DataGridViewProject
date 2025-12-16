@@ -24,12 +24,12 @@ namespace DataGridViewProject.Manager
             logger = loggerFactory.CreateLogger<ProductManager>();
         }
 
-        async Task<IEnumerable<ProductModel>> IProductManager.GetAllProducts(CancellationToken cancellationToken = default)
+        async Task<IEnumerable<ProductModel>> IProductManager.GetAllProducts(CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             try
             {
-                var result = await storage.GetAllProducts();
+                var result = await storage.GetAllProducts(cancellationToken);
                 return result;
             }
             finally
@@ -39,12 +39,12 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task IProductManager.AddProduct(ProductModel product, CancellationToken cancellationToken = default)
+        async Task IProductManager.AddProduct(ProductModel product, CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             try
             {
-                await storage.AddProduct(product);
+                await storage.AddProduct(product, cancellationToken);
             }
             finally
             {
@@ -53,12 +53,12 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task IProductManager.UpdateProduct(ProductModel product, CancellationToken cancellationToken = default)
+        async Task IProductManager.UpdateProduct(ProductModel product, CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             try
             {
-                await storage.UpdateProduct(product);
+                await storage.UpdateProduct(product, cancellationToken);
             }
             finally
             {
@@ -67,12 +67,12 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task IProductManager.DeleteProduct(Guid id, CancellationToken cancellationToken = default)
+        async Task IProductManager.DeleteProduct(Guid id, CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             try
             {
-                await storage.DeleteProduct(id);
+                await storage.DeleteProduct(id, cancellationToken);
             }
             finally
             {
@@ -81,12 +81,12 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task<ProductModel?> IProductManager.GetProductById(Guid id, CancellationToken cancellationToken = default)
+        async Task<ProductModel?> IProductManager.GetProductById(Guid id, CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             try
             {
-                var result = await storage.GetProductById(id);
+                var result = await storage.GetProductById(id, cancellationToken);
                 return result;
             }
             finally
@@ -96,12 +96,12 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task<decimal> IProductManager.GetProductTotalPriceWithoutTax(Guid id, CancellationToken cancellationToken = default)
+        async Task<decimal> IProductManager.GetProductTotalPriceWithoutTax(Guid id, CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             try
             {
-                var result = await storage.GetProductTotalPriceWithoutTax(id);
+                var result = await storage.GetProductTotalPriceWithoutTax(id, cancellationToken);
                 return result;
             }
             finally
@@ -111,12 +111,12 @@ namespace DataGridViewProject.Manager
             }
         }
 
-        async Task<ProductStatistics> IProductManager.GetStatistics(CancellationToken cancellationToken = default)
+        async Task<ProductStatistics> IProductManager.GetStatistics(CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             try
             {
-                var products = await (storage).GetAllProducts();
+                var products = await (storage).GetAllProducts(cancellationToken);
                 var statistics = new ProductStatistics
                 {
                     ProductCount = products.Count(),
