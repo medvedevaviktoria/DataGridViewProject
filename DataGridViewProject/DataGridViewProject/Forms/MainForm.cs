@@ -28,7 +28,7 @@ namespace DataGridViewProject.Forms
 
         private async Task LoadData()
         {
-            var products = await productManager.GetAllProducts();
+            var products = await productManager.GetAllProducts(CancellationToken.None);
             bindingSource.DataSource = products.ToList();
             dataGridView1.DataSource = bindingSource;
             await SetStatistic();
@@ -36,7 +36,7 @@ namespace DataGridViewProject.Forms
 
         private async Task OnUpdate()
         {
-            var products = await productManager.GetAllProducts();
+            var products = await productManager.GetAllProducts(CancellationToken.None);
             bindingSource.DataSource = products.ToList();
             bindingSource.ResetBindings(false);
             await SetStatistic();
@@ -44,7 +44,7 @@ namespace DataGridViewProject.Forms
 
         private async Task SetStatistic()
         {
-            var statistics = await productManager.GetStatistics();
+            var statistics = await productManager.GetStatistics(CancellationToken.None);
             LabelQuantity.Text = $"Количество товаров: {statistics.ProductCount}";
             LabelPriceWithTax.Text = $"Общая сумма товаров на складе(С НДС): {statistics.TotalWithTax:F2} ₽";
             LabelPriceWithoutTax.Text = $"Общая сумма товаров на складе(БЕЗ НДС): {statistics.TotalWithoutTax:F2} ₽";
@@ -73,7 +73,7 @@ namespace DataGridViewProject.Forms
 
             if (col.Name == "TotalPriceWithoutTax")
             {
-                var totalPriceWithoutTax = await productManager.GetProductTotalPriceWithoutTax(product.Id);
+                var totalPriceWithoutTax = await productManager.GetProductTotalPriceWithoutTax(product.Id, CancellationToken.None);
                 e.Value = totalPriceWithoutTax;
             }
         }
@@ -83,7 +83,7 @@ namespace DataGridViewProject.Forms
             var addForm = new ProductForm();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                await productManager.AddProduct(addForm.CurrentProduct);
+                await productManager.AddProduct(addForm.CurrentProduct, CancellationToken.None);
                 await OnUpdate();
             }
         }
@@ -98,7 +98,7 @@ namespace DataGridViewProject.Forms
             var product = (ProductModel)dataGridView1.SelectedRows[0].DataBoundItem;
             if (MessageBox.Show($"Удалить '{product.ProductName}'?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                await productManager.DeleteProduct(product.Id);
+                await productManager.DeleteProduct(product.Id, CancellationToken.None);
                 await OnUpdate();
 
             }
@@ -116,7 +116,7 @@ namespace DataGridViewProject.Forms
             var editForm = new ProductForm(product);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                await productManager.UpdateProduct(editForm.CurrentProduct);
+                await productManager.UpdateProduct(editForm.CurrentProduct, CancellationToken.None);
                 await OnUpdate();
             }
         }
