@@ -12,7 +12,7 @@ namespace DataGridViewProject.DataBaseStorage
         public async Task<IEnumerable<ProductModel>> GetAllProducts(CancellationToken cancellationToken )
         {
             using var database = new DataGridViewProjectContext();
-            return await database.Products.AsNoTracking().ToListAsync();
+            return await database.Products.AsNoTracking().ToListAsync(cancellationToken);
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace DataGridViewProject.DataBaseStorage
         {
             using var database = new DataGridViewProjectContext();
             database.Products.Add(product);
-            await database.SaveChangesAsync();
+            await database.SaveChangesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace DataGridViewProject.DataBaseStorage
         {
             using var database = new DataGridViewProjectContext();
             database.Products.Update(product);
-            await database.SaveChangesAsync();
+            await database.SaveChangesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -41,11 +41,11 @@ namespace DataGridViewProject.DataBaseStorage
         public async Task DeleteProduct(Guid id, CancellationToken cancellationToken)
         {
             using var database = new DataGridViewProjectContext();
-            var product = await database.Products.FindAsync(id);
+            var product = await database.Products.FindAsync(id, cancellationToken);
             if (product != null)
             {
                 database.Products.Remove(product);
-                await database.SaveChangesAsync();
+                await database.SaveChangesAsync(cancellationToken);
             }
         }
 
@@ -56,7 +56,7 @@ namespace DataGridViewProject.DataBaseStorage
         public async Task<ProductModel?> GetProductById(Guid id, CancellationToken cancellationToken)
         {
             using var database = new DataGridViewProjectContext();
-            return await database.Products.FindAsync(id);
+            return await database.Products.FindAsync(id, cancellationToken);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace DataGridViewProject.DataBaseStorage
         public async Task<decimal> GetProductTotalPriceWithoutTax(Guid id, CancellationToken cancellationToken)
         {
             using var database = new DataGridViewProjectContext();
-            var product = await database.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            var product = await database.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
             return product is null ? 0m : product.PriceWithoutTax * product.Quantity;
         }
     }
